@@ -22,7 +22,7 @@ public class Overlays extends FoodStats {
             Minecraft mc = Minecraft.getInstance();
             thirstTick();
             int y = mc.getMainWindow().getScaledHeight() - ForgeIngameGui.right_height;
-            int x = mc.getMainWindow().getScaledWidth() / 2 + 10;
+            int x = mc.getMainWindow().getScaledWidth() / 2 + 82;
             MatrixStack stack = event.getMatrixStack();
             mc.getTextureManager().bindTexture(new ResourceLocation(EpicsExtremeSurvival.MODID, "textures/gui/overlays.png"));
 
@@ -36,15 +36,15 @@ public class Overlays extends FoodStats {
         int iterator = 0;
 
         while (iterator != fullAmount) {
-            draw(stack, x + iterator * 8, y, 0, 0, 9, 9);
+            draw(stack, x - (iterator * 8), y, 0, 0, 9, 9);
             iterator = iterator + 1;
         }
         if (drawHalf) {
-            draw(stack, x + iterator * 8, y, 10, 0, 9, 9);
+            draw(stack, x - (iterator * 8), y, 10, 0, 9, 9);
             iterator = iterator + 1;
         }
         while (iterator != 10) {
-            draw(stack, x + iterator * 8, y, 30, 0, 9, 9);
+            draw(stack, x - (iterator * 8), y, 30, 0, 9, 9);
             iterator = iterator + 1;
         }
     }

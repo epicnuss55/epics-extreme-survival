@@ -12,6 +12,7 @@ public class DeathEvent {
     @SubscribeEvent
     public void event(LivingDeathEvent event) {
         if (event.getEntity().equals(Minecraft.getInstance().player)) {
+            Overlays.prevFoodLevel = 20;
             Overlays.thirstValue = 10f;
         }
     }
