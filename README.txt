@@ -12,8 +12,15 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 //OPTIONAL\\
 7. create a tutorial video on youtube
 
-DD/MM/YY
+DD/MM/YYYY
 //CHANGELOGS
 
+21/02/2021
+- Thirst bar & thirst logic
+- placeholder Item
+- Item group
+- death resets thirst
+- health wont restore until both hunger & food are both maxed out
+
 20/02/2021
-initial commit & created mod workspace
+- initial commit & created mod workspace
