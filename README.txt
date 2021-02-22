@@ -14,6 +14,8 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 
 DD/MM/YYYY
 //CHANGELOGS
+22/02/2021
+- fixed the bug were as soon as you respawn, you instantly loose half a thirst
 
 21/02/2021
 - Thirst bar & thirst logic

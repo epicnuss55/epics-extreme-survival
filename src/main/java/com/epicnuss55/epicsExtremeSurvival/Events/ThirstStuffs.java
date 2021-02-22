@@ -2,6 +2,8 @@ package com.epicnuss55.epicsExtremeSurvival.Events;
 
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -10,26 +12,48 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.FoodStats;
 
 @OnlyIn(Dist.CLIENT)
-public class Overlays extends FoodStats {
+public class ThirstStuffs extends FoodStats {
 
+    //*EVENTS*\\
+    //wont heal unless water is also high enough
+    @SubscribeEvent
+    public void event(LivingHealEvent event) {
+        if (!(ThirstStuffs.thirstValue == 8.5f && event.getEntity().equals(Minecraft.getInstance().player) && Minecraft.getInstance().player.getFoodStats().getFoodLevel() == 20)) {
+            EpicsExtremeSurvival.LOGGER.info("Heal Cancelled");
+            event.setCanceled(true);
+        }
+    }
+
+    //after the player dies and respawns, thirst value resets
+    @SubscribeEvent
+    public void event(PlayerEvent.PlayerRespawnEvent event) {
+        if (event.getEntity().equals(Minecraft.getInstance().player)) {
+            ThirstStuffs.prevFoodLevel = 20;
+            ThirstStuffs.thirstValue = 10f;
+        }
+    }
+
+    //Renderer (doubles as a tick event)
     @SubscribeEvent
     public void OverlayEvent(RenderGameOverlayEvent.Post event) {
         if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD) {
             Minecraft mc = Minecraft.getInstance();
-            thirstTick();
             int y = mc.getMainWindow().getScaledHeight() - ForgeIngameGui.right_height;
             int x = mc.getMainWindow().getScaledWidth() / 2 + 82;
             MatrixStack stack = event.getMatrixStack();
             mc.getTextureManager().bindTexture(new ResourceLocation(EpicsExtremeSurvival.MODID, "textures/gui/overlays.png"));
 
+            thirstTick();
             renderThirstBar(stack, x, y);
         }
     }
 
+
+    //*LOGIC*\\
+    //render logic
     public static void renderThirstBar(MatrixStack stack, int x, int y) {
         int fullAmount = (int) thirstValue;
         boolean drawHalf = fullAmount != thirstValue;
@@ -49,17 +73,16 @@ public class Overlays extends FoodStats {
         }
     }
 
-
-
+    //render simplifier lol
     private static void draw(MatrixStack stack, int ScreenXPos, int ScreenYPos, int textureXStartPos, int textureYStartPos, int textureXEndPos, int textureYEndPos) {
         Minecraft.getInstance().ingameGUI.blit(stack, ScreenXPos, ScreenYPos, textureXStartPos, textureYStartPos, textureXEndPos, textureYEndPos);
     }
-
 
     public static int prevFoodLevel = 20;
     public static float thirstValue = 10f;
     public static int ticker = 0;
 
+    //even more logic lol -- everytime the hunger bar changes, the thirst bar ticks down once
     private static void thirstTick() {
         ticker++;
         Boolean hungerChanged = foodChanged(Minecraft.getInstance());
@@ -72,6 +95,7 @@ public class Overlays extends FoodStats {
         if (ticker == 20) ticker = 0;
     }
 
+    //returns true everytime the food value changes
     private static boolean foodChanged(Minecraft mc) {
         int currentFoodLevel = mc.player.getFoodStats().getFoodLevel();
         if(prevFoodLevel != currentFoodLevel) {
@@ -81,6 +105,8 @@ public class Overlays extends FoodStats {
         return false;
     }
 
+
+    //TODO: fix up the saving system
     /*@Override
     public void write(CompoundNBT compound) {
         CompoundNBT thirst = new CompoundNBT();
