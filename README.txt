@@ -14,6 +14,10 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 
 DD/MM/YYYY
 //CHANGELOGS
+
+24/02/2021
+- added the ability to regain water by drinking out of a bottle
+
 22/02/2021
 - fixed the bug were as soon as you respawn, you instantly loose half a thirst
 
