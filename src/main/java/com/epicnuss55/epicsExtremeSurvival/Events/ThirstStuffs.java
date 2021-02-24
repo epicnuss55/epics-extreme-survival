@@ -1,44 +1,59 @@
 package com.epicnuss55.epicsExtremeSurvival.Events;
 
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.Items;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.FoodStats;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.DamageSource;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.FoodStats;
+import net.minecraftforge.fml.common.Mod;
 
-@OnlyIn(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = EpicsExtremeSurvival.MODID, value = Dist.CLIENT)
 public class ThirstStuffs extends FoodStats {
 
     //*EVENTS*\\
     //wont heal unless water is also high enough
     @SubscribeEvent
-    public void event(LivingHealEvent event) {
+    public void Heal(LivingHealEvent event) {
         if (!(ThirstStuffs.thirstValue == 8.5f && event.getEntity().equals(Minecraft.getInstance().player) && Minecraft.getInstance().player.getFoodStats().getFoodLevel() == 20)) {
             EpicsExtremeSurvival.LOGGER.info("Heal Cancelled");
             event.setCanceled(true);
         }
     }
 
+    //If drinks any bottled liquids then adds half a bar back
+    @SubscribeEvent
+    public void DrinkWater(LivingEntityUseItemEvent.Finish event) {
+        if (event.getResultStack().getItem() == Items.GLASS_BOTTLE.getItem() && event.getEntity().getEntityWorld().isRemote()) {
+            float updateValue = thirstValue + 0.5f;
+            if (updateValue <= 10)
+                thirstValue = updateValue;
+        }
+    }
+
     //after the player dies and respawns, thirst value resets
     @SubscribeEvent
-    public void event(PlayerEvent.PlayerRespawnEvent event) {
-        if (event.getEntity().equals(Minecraft.getInstance().player)) {
-            ThirstStuffs.prevFoodLevel = 20;
-            ThirstStuffs.thirstValue = 10f;
+    public void Respawn(PlayerEvent.PlayerRespawnEvent event) {
+        if ((event.getEntity().equals(Minecraft.getInstance().player)) && (thirstValue != 15f)) {
+            prevFoodLevel = 20;
+            thirstValue = 10f;
         }
     }
 
     //Renderer (doubles as a tick event)
     @SubscribeEvent
-    public void OverlayEvent(RenderGameOverlayEvent.Post event) {
+    public void Overlay(RenderGameOverlayEvent.Post event) {
         if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD) {
             Minecraft mc = Minecraft.getInstance();
             int y = mc.getMainWindow().getScaledHeight() - ForgeIngameGui.right_height;
@@ -89,8 +104,6 @@ public class ThirstStuffs extends FoodStats {
         if(hungerChanged && thirstValue != 0f) thirstValue = thirstValue - 0.5f;
         if(thirstValue < 3f) Minecraft.getInstance().player.setSprinting(false);
         if(thirstValue == 0f && ticker == 20) Minecraft.getInstance().player.attackEntityFrom(DamageSource.STARVE, 0.5f);
-
-        EpicsExtremeSurvival.LOGGER.info(thirstValue);
 
         if (ticker == 20) ticker = 0;
     }
