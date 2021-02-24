@@ -16,6 +16,7 @@ DD/MM/YYYY
 //CHANGELOGS
 
 24/02/2021
+- fixed player not healing bug
 - added the ability to regain water by drinking out of a bottle
 
 22/02/2021

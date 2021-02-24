@@ -8,14 +8,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -26,9 +23,12 @@ public class ThirstStuffs extends FoodStats {
     //wont heal unless water is also high enough
     @SubscribeEvent
     public void Heal(LivingHealEvent event) {
-        if (!(ThirstStuffs.thirstValue == 8.5f && event.getEntity().equals(Minecraft.getInstance().player) && Minecraft.getInstance().player.getFoodStats().getFoodLevel() == 20)) {
+        if (thirstValue < 8.5f && event.getEntity().equals(Minecraft.getInstance().player.getEntity())) {
             EpicsExtremeSurvival.LOGGER.info("Heal Cancelled");
             event.setCanceled(true);
+        } else {
+            EpicsExtremeSurvival.LOGGER.info("Healing");
+            event.setCanceled(false);
         }
     }
 
