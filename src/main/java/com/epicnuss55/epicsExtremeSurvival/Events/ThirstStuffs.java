@@ -2,22 +2,27 @@ package com.epicnuss55.epicsExtremeSurvival.Events;
 
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.Items;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = EpicsExtremeSurvival.MODID, value = Dist.CLIENT)
-public class ThirstStuffs extends FoodStats {
+public class ThirstStuffs {
 
     //*EVENTS*\\
     //wont heal unless water is also high enough
@@ -27,6 +32,7 @@ public class ThirstStuffs extends FoodStats {
             EpicsExtremeSurvival.LOGGER.info("Heal Cancelled");
             event.setCanceled(true);
         } else {
+            Dehydration = Dehydration + REGEN;
             EpicsExtremeSurvival.LOGGER.info("Healing");
             event.setCanceled(false);
         }
@@ -39,6 +45,7 @@ public class ThirstStuffs extends FoodStats {
             float updateValue = thirstValue + 0.5f;
             if (updateValue <= 10)
                 thirstValue = updateValue;
+            Dehydration = 0;
         }
     }
 
@@ -51,7 +58,7 @@ public class ThirstStuffs extends FoodStats {
         }
     }
 
-    //Renderer (doubles as a tick event)
+    //Renderer
     @SubscribeEvent
     public void Overlay(RenderGameOverlayEvent.Post event) {
         if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD) {
@@ -61,9 +68,11 @@ public class ThirstStuffs extends FoodStats {
             MatrixStack stack = event.getMatrixStack();
             mc.getTextureManager().bindTexture(new ResourceLocation(EpicsExtremeSurvival.MODID, "textures/gui/overlays.png"));
 
-            thirstTick();
             renderThirstBar(stack, x, y);
+
         }
+        if (thirstValue != 0)
+            dehydrator(Minecraft.getInstance());
     }
 
 
@@ -93,30 +102,70 @@ public class ThirstStuffs extends FoodStats {
         Minecraft.getInstance().ingameGUI.blit(stack, ScreenXPos, ScreenYPos, textureXStartPos, textureYStartPos, textureXEndPos, textureYEndPos);
     }
 
+
     public static int prevFoodLevel = 20;
     public static float thirstValue = 10f;
     public static int ticker = 0;
 
-    //even more logic lol -- everytime the hunger bar changes, the thirst bar ticks down once
-    private static void thirstTick() {
-        ticker++;
-        Boolean hungerChanged = foodChanged(Minecraft.getInstance());
-        if(hungerChanged && thirstValue != 0f) thirstValue = thirstValue - 0.5f;
-        if(thirstValue < 3f) Minecraft.getInstance().player.setSprinting(false);
-        if(thirstValue == 0f && ticker == 20) Minecraft.getInstance().player.attackEntityFrom(DamageSource.STARVE, 0.5f);
 
-        if (ticker == 20) ticker = 0;
-    }
-
-    //returns true everytime the food value changes
-    private static boolean foodChanged(Minecraft mc) {
-        int currentFoodLevel = mc.player.getFoodStats().getFoodLevel();
-        if(prevFoodLevel != currentFoodLevel) {
-            prevFoodLevel = currentFoodLevel;
-            return true;
+    public static void dehydrationEvent(Minecraft mc) {
+        EpicsExtremeSurvival.LOGGER.info("dehydration effects");
+        KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKey(), false);
+        if (mc.player.isSprinting()) mc.player.setSprinting(false);
+        if (thirstValue == 0 && ticker == 1 && mc.player.getEntityWorld().isRemote) {
+            mc.player.getEntity().attackEntityFrom(DamageSource.GENERIC, 4);
+            EpicsExtremeSurvival.LOGGER.info("thirst damage");
         }
-        return false;
     }
+
+    private static double Dehydration = 0;
+
+    private static final double SWIMMING = 0.01;
+    private static final double BLOCK_BREAKING = 1;
+    private static final double SPRINTING = 0.0001;
+    private static final double JUMPING = 1;
+    private static final double ATTACKING = 2;
+    private static final double TAKING_DAMAGE = 5;
+    private static final double DEHYDRATED_DEBUFF = 10;
+    private static final double REGEN = 2.5;
+
+    //reduces your thirst when preforming certain actions (see above)
+    private static void dehydrator(Minecraft mc) {
+        if (Minecraft.getInstance().world.getBlockState(mc.player.getPosition()).equals(Blocks.WATER.getDefaultState())) Dehydration = Dehydration + SWIMMING;
+        if (mc.player.isSprinting()) Dehydration = Dehydration + SPRINTING;
+
+        EpicsExtremeSurvival.LOGGER.info(Dehydration);
+        if (Dehydration > 50) {
+            Dehydration = 0;
+            thirstValue = thirstValue - 0.5f;
+        }
+        if (thirstValue < 3f)
+            dehydrationEvent(mc);
+    }
+
+    @SubscribeEvent
+    public void BlockBreak(BlockEvent.BreakEvent event) {
+        Dehydration = Dehydration + BLOCK_BREAKING;
+    }
+
+    @SubscribeEvent
+    public void Jump(LivingEvent.LivingJumpEvent event) {
+        if (event.getEntity() == Minecraft.getInstance().player)
+            Dehydration = Dehydration + JUMPING;
+    }
+
+    @SubscribeEvent
+    public void Attack(AttackEntityEvent event) {
+        Dehydration = Dehydration + ATTACKING;
+    }
+
+    @SubscribeEvent
+    public void Damage(LivingDamageEvent event) {
+        if (event.getEntity() == Minecraft.getInstance().player) {
+            Dehydration = Dehydration + TAKING_DAMAGE;
+        }
+    }
+
 
 
     //TODO: fix up the saving system

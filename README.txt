@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+25/02/2021
+- gave thirst its own exhaustion (so it no longer piggy-backs off of whenever the hunger bar changes)
+
 24/02/2021
 - fixed player not healing bug
 - added the ability to regain water by drinking out of a bottle
