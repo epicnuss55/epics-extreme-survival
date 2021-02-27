@@ -15,6 +15,10 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+27/02/2021
+- bug fixes in dehydration logic
+- attempt to balance the dehydration amount
+
 25/02/2021
 - gave thirst its own exhaustion (so it no longer piggy-backs off of whenever the hunger bar changes)
 

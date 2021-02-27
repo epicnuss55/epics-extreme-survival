@@ -145,8 +145,8 @@ public class ThirstStuffs {
     private static final double JUMPING = 2;
     private static final double ATTACKING = 4;
     private static final double TAKING_DAMAGE = 5;
-    private static final double DEHYDRATED_DEBUFF = 10;
-    private static final double REGEN = 10;
+    private static final double DEHYDRATED_DEBUFF = 5;
+    private static final double REGEN = 5;
 
     //reduces your thirst when preforming certain actions (see above)
     private static void dehydrator(PlayerEntity player) {
