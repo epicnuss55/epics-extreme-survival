@@ -15,6 +15,11 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+1/03/2021
+- all thirst related bugs (probably) fixed
+- balanced dehydration
+- fixed player not being damaged when suffering from terminal dehydration bug
+
 27/02/2021
 - bug fixes in dehydration logic
 - attempt to balance the dehydration amount

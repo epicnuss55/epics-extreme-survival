@@ -4,9 +4,10 @@ import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -27,16 +28,17 @@ public class ThirstStuffs {
 
     //*EVENTS*\\
     //wont heal unless water is also high enough
-
     @SubscribeEvent
     public void Heal(LivingHealEvent event) {
-        if (thirstValue < 8.5f && event.getEntity() instanceof PlayerEntity) {
-            EpicsExtremeSurvival.LOGGER.info("Heal Cancelled");
-            event.setCanceled(true);
-        } else {
-            Dehydration = Dehydration + REGEN;
-            EpicsExtremeSurvival.LOGGER.info("Healing");
-            event.setCanceled(false);
+        if (event.getEntity() instanceof PlayerEntity) {
+            if (thirstValue < 8.5f) {
+                EpicsExtremeSurvival.LOGGER.info("Heal Cancelled");
+                event.setCanceled(true);
+            } else {
+                Dehydration = Dehydration + REGEN;
+                EpicsExtremeSurvival.LOGGER.info("Healing");
+                event.setCanceled(false);
+            }
         }
     }
 
@@ -88,6 +90,7 @@ public class ThirstStuffs {
 
             renderThirstBar(stack, x, y);
 
+            mc.getTextureManager().bindTexture(AbstractGui.GUI_ICONS_LOCATION);
         }
     }
 
@@ -99,17 +102,32 @@ public class ThirstStuffs {
         boolean drawHalf = fullAmount != thirstValue;
         int iterator = 0;
 
-        while (iterator != fullAmount) {
-            draw(stack, x - (iterator * 8), y, 0, 0, 9, 9);
-            iterator = iterator + 1;
-        }
-        if (drawHalf) {
-            draw(stack, x - (iterator * 8), y, 10, 0, 9, 9);
-            iterator = iterator + 1;
-        }
-        while (iterator != 10) {
-            draw(stack, x - (iterator * 8), y, 30, 0, 9, 9);
-            iterator = iterator + 1;
+        if (Minecraft.getInstance().player.areEyesInFluid(FluidTags.WATER) || Minecraft.getInstance().player.getAir() < 300) {
+            while (iterator != fullAmount) {
+                draw(stack, x - (iterator * 8), y-9, 0, 0, 9, 9);
+                iterator = iterator + 1;
+            }
+            if (drawHalf) {
+                draw(stack, x - (iterator * 8), y-9, 10, 0, 9, 9);
+                iterator = iterator + 1;
+            }
+            while (iterator != 10) {
+                draw(stack, x - (iterator * 8), y-9, 30, 0, 9, 9);
+                iterator = iterator + 1;
+            }
+        } else {
+            while (iterator != fullAmount) {
+                draw(stack, x - (iterator * 8), y, 0, 0, 9, 9);
+                iterator = iterator + 1;
+            }
+            if (drawHalf) {
+                draw(stack, x - (iterator * 8), y, 10, 0, 9, 9);
+                iterator = iterator + 1;
+            }
+            while (iterator != 10) {
+                draw(stack, x - (iterator * 8), y, 30, 0, 9, 9);
+                iterator = iterator + 1;
+            }
         }
     }
 
@@ -118,10 +136,8 @@ public class ThirstStuffs {
         Minecraft.getInstance().ingameGUI.blit(stack, ScreenXPos, ScreenYPos, textureXStartPos, textureYStartPos, textureXEndPos, textureYEndPos);
     }
 
-
     public static float thirstValue = 10f;
     public static int damageTick = 0;
-    public static Boolean shouldTakeDamage = false;
 
     //when thirst value is below 3 bars, fire this
     public static void dehydrationEvent(PlayerEntity player) {
@@ -129,7 +145,7 @@ public class ThirstStuffs {
         if (player.isSprinting()) player.setSprinting(false);
         if (thirstValue == 0) {
             damageTick++;
-            if (damageTick == 40) {
+            if (damageTick == 100) {
                 player.attackEntityFrom(DamageSource.GENERIC, 1);
                 damageTick = 0;
             }
@@ -141,10 +157,10 @@ public class ThirstStuffs {
 
     private static final double SWIMMING = 0.01;
     private static final double BLOCK_BREAKING = 1;
-    private static final double SPRINTING = 0.1;
+    private static final double SPRINTING = 0.05;
     private static final double JUMPING = 2;
-    private static final double ATTACKING = 4;
-    private static final double TAKING_DAMAGE = 5;
+    private static final double ATTACKING = 2;
+    private static final double TAKING_DAMAGE = 4;
     private static final double DEHYDRATED_DEBUFF = 5;
     private static final double REGEN = 5;
 
