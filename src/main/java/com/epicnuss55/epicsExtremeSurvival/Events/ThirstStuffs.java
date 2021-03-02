@@ -149,6 +149,12 @@ public class ThirstStuffs extends FoodStats {
             damageTick++;
             if (damageTick == 100) {
                 damageTick = 0;
+                switch (player.getEntityWorld().getDifficulty()) {
+                    case NORMAL:
+                    case EASY: if (player.getHealth() < 10f) player.attackEntityFrom(DamageSource.STARVE, 1);
+                        break;
+                    case HARD: player.attackEntityFrom(DamageSource.STARVE, 1);
+                }
             }
         }
     }
