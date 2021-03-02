@@ -9,7 +9,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.Difficulty;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.TickEvent;
@@ -24,7 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = EpicsExtremeSurvival.MODID)
-public class ThirstStuffs {
+public class ThirstStuffs extends FoodStats {
 
     //*EVENTS*\\
     //wont heal unless water is also high enough
@@ -45,8 +47,8 @@ public class ThirstStuffs {
     //thirst logic
     @SubscribeEvent
     public void TDehydration(TickEvent.PlayerTickEvent event) {
-        if (event.type == TickEvent.Type.PLAYER && event.phase == TickEvent.Phase.END) {
-            if (thirstValue != 0)
+        if (event.type == TickEvent.Type.PLAYER && event.phase == TickEvent.Phase.END && !event.player.isCreative()) {
+            if (thirstValue != 0 && event.player.getEntityWorld().getDifficulty() != Difficulty.PEACEFUL)
                 dehydrator(event.player);
 
             if (thirstValue == 0)
@@ -146,7 +148,6 @@ public class ThirstStuffs {
         if (thirstValue == 0) {
             damageTick++;
             if (damageTick == 100) {
-                player.attackEntityFrom(DamageSource.GENERIC, 1);
                 damageTick = 0;
             }
         }
@@ -220,7 +221,7 @@ public class ThirstStuffs {
 
     @Override
     public void read(CompoundNBT compound) {
-        CompoundNBT thirst = compound.getCompound("thirstNBT");
+        CompoundNBT thirst = compound.getCompund("thirstNBT");
         thirstValue = thirst.getFloat("thirst");
         prevFoodLevel = thirst.getInt("prevFood");
 

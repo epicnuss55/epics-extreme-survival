@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+3/03/2021
+- fixed bug where thirst was depleting in creative mode
+
 1/03/2021
 - all thirst related bugs (probably) fixed
 - balanced dehydration
