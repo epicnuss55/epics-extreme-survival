@@ -18,6 +18,7 @@ DD/MM/YYYY
 3/03/2021
 - fixed bug where thirst was depleting in creative mode
 - fixed bug where thirst would deplete in peaceful mode and kill you on easy and normal
+- fixed up thirst saving system
 
 1/03/2021
 - all thirst related bugs (probably) fixed

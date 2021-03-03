@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.FoodStats;
@@ -138,7 +139,7 @@ public class ThirstStuffs extends FoodStats {
         Minecraft.getInstance().ingameGUI.blit(stack, ScreenXPos, ScreenYPos, textureXStartPos, textureYStartPos, textureXEndPos, textureYEndPos);
     }
 
-    public static float thirstValue = 10f;
+    public static float thirstValue;
     public static int damageTick = 0;
 
     //when thirst value is below 3 bars, fire this
@@ -159,7 +160,7 @@ public class ThirstStuffs extends FoodStats {
         }
     }
 
-    private static double Dehydration = 0;
+    private static double Dehydration;
     private static Boolean dehydrated = false;
 
     private static final double SWIMMING = 0.01;
@@ -213,25 +214,25 @@ public class ThirstStuffs extends FoodStats {
     }
 
 
-
-    //TODO: fix up the saving system
-    /*@Override
-    public void write(CompoundNBT compound) {
-        CompoundNBT thirst = new CompoundNBT();
-        thirst.putFloat("thirst", thirstValue);
-        thirst.putInt("prevFood", prevFoodLevel);
-        compound.put("thirstNBT", thirst);
-
-        super.write(compound);
+    @Override
+    public void read(CompoundNBT compound) {
+        if (compound.contains("thirststuffs")) {
+            CompoundNBT thirststuffs = compound.getCompound("thirststuffs");
+            thirstValue = thirststuffs.getFloat("thirstvalue");
+            Dehydration = thirststuffs.getDouble("dehydration");
+        } else {
+            thirstValue = 10f;
+            Dehydration = 0;
+        }
+        super.read(compound);
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        CompoundNBT thirst = compound.getCompund("thirstNBT");
-        thirstValue = thirst.getFloat("thirst");
-        prevFoodLevel = thirst.getInt("prevFood");
-
-        super.read(compound);
+    public void write(CompoundNBT compound) {
+        CompoundNBT thirststuffs = new CompoundNBT();
+        thirststuffs.putFloat("thirstvalue", thirstValue);
+        thirststuffs.putDouble("dehydration", Dehydration);
+        compound.put("thirststuffs", thirststuffs);
+        super.write(compound);
     }
-     */
 }
