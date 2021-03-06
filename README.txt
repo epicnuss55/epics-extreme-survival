@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+6/03/2021
+- finally fixed the saving system (hopefully won't break again)
+
 3/03/2021
 - fixed bug where thirst was depleting in creative mode
 - fixed bug where thirst would deplete in peaceful mode and kill you on easy and normal
