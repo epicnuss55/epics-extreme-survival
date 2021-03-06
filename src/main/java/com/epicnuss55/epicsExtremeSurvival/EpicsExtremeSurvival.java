@@ -1,5 +1,6 @@
 package com.epicnuss55.epicsExtremeSurvival;
 
+import com.epicnuss55.epicsExtremeSurvival.Init.PlayerStatsSaver;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
@@ -28,7 +29,7 @@ public class EpicsExtremeSurvival {
         ItemInit.ITEMS.register(bus);
         instance = this;
         MinecraftForge.EVENT_BUS.register(new ThirstStuffs());
-
+        MinecraftForge.EVENT_BUS.register(new PlayerStatsSaver());
         MinecraftForge.EVENT_BUS.register(this);
     }
 

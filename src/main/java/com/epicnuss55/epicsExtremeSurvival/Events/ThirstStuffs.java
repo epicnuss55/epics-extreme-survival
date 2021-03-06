@@ -1,6 +1,7 @@
 package com.epicnuss55.epicsExtremeSurvival.Events;
 
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
+import com.epicnuss55.epicsExtremeSurvival.Init.PlayerStatsSaver;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
@@ -10,12 +11,13 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Difficulty;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityLeaveWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -27,9 +29,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = EpicsExtremeSurvival.MODID)
-public class ThirstStuffs extends FoodStats {
+public class ThirstStuffs {
 
-    //*EVENTS*\\
+    //*---------------EVENTS---------------*\\
     //wont heal unless water is also high enough
     @SubscribeEvent
     public void Heal(LivingHealEvent event) {
@@ -51,7 +53,6 @@ public class ThirstStuffs extends FoodStats {
         if (event.type == TickEvent.Type.PLAYER && event.phase == TickEvent.Phase.END && !event.player.isCreative()) {
             if (thirstValue != 0 && event.player.getEntityWorld().getDifficulty() != Difficulty.PEACEFUL)
                 dehydrator(event.player);
-
             if (thirstValue == 0)
                 dehydrated = true;
 
@@ -76,7 +77,7 @@ public class ThirstStuffs extends FoodStats {
     //after the player dies and respawns, thirst value resets
     @SubscribeEvent
     public void Respawn(PlayerEvent.PlayerRespawnEvent event) {
-        if ((event.getEntity().equals(Minecraft.getInstance().player)) && (thirstValue != 15f)) {
+        if (event.getEntity().equals(Minecraft.getInstance().player)) {
             thirstValue = 10f;
         }
     }
@@ -98,7 +99,7 @@ public class ThirstStuffs extends FoodStats {
     }
 
 
-    //*LOGIC*\\
+    //*---------------LOGIC---------------*\\
     //render logic
     public static void renderThirstBar(MatrixStack stack, int x, int y) {
         int fullAmount = (int) thirstValue;
@@ -139,7 +140,7 @@ public class ThirstStuffs extends FoodStats {
         Minecraft.getInstance().ingameGUI.blit(stack, ScreenXPos, ScreenYPos, textureXStartPos, textureYStartPos, textureXEndPos, textureYEndPos);
     }
 
-    public static float thirstValue;
+    public static float thirstValue = 10f;
     public static int damageTick = 0;
 
     //when thirst value is below 3 bars, fire this
@@ -160,7 +161,7 @@ public class ThirstStuffs extends FoodStats {
         }
     }
 
-    private static double Dehydration;
+    private static double Dehydration = 0;
     private static Boolean dehydrated = false;
 
     private static final double SWIMMING = 0.01;
@@ -214,25 +215,17 @@ public class ThirstStuffs extends FoodStats {
     }
 
 
-    @Override
-    public void read(CompoundNBT compound) {
-        if (compound.contains("thirststuffs")) {
-            CompoundNBT thirststuffs = compound.getCompound("thirststuffs");
-            thirstValue = thirststuffs.getFloat("thirstvalue");
-            Dehydration = thirststuffs.getDouble("dehydration");
-        } else {
-            thirstValue = 10f;
-            Dehydration = 0;
-        }
-        super.read(compound);
+
+    public static final String THIRST_NBT = "thirstval";
+    public static final String DEHYDRATION_NBT = "dehydrationval";
+
+    public static void read(CompoundNBT compound) {
+        thirstValue = compound.getFloat(THIRST_NBT);
+        Dehydration = compound.getFloat(DEHYDRATION_NBT);
     }
 
-    @Override
-    public void write(CompoundNBT compound) {
-        CompoundNBT thirststuffs = new CompoundNBT();
-        thirststuffs.putFloat("thirstvalue", thirstValue);
-        thirststuffs.putDouble("dehydration", Dehydration);
-        compound.put("thirststuffs", thirststuffs);
-        super.write(compound);
+    public static void write(CompoundNBT compound) {
+        compound.putFloat(THIRST_NBT, thirstValue);
+        compound.putDouble(DEHYDRATION_NBT, Dehydration);
     }
 }
