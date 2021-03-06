@@ -215,7 +215,7 @@ public class ThirstStuffs {
     }
 
 
-
+    //Thirst save system
     public static final String THIRST_NBT = "thirstval";
     public static final String DEHYDRATION_NBT = "dehydrationval";
 

@@ -14,8 +14,13 @@ import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = EpicsExtremeSurvival.MODID)
 public class PlayerStatsSaver {
+
+    //NBT tags
     public static final String ThirstNBT = "ThirstStats";
 
+    //*----------------SAVER LOGIC & EVENTS----------------*\\
+
+    //loads data
     @SubscribeEvent
     public void worldLoaded(WorldEvent.Load event) {
         if (!event.getWorld().isRemote() && event.getWorld() instanceof ServerWorld) {
@@ -26,6 +31,7 @@ public class PlayerStatsSaver {
         }
     }
 
+    //saves data
     @SubscribeEvent
     public void worldSaved(WorldEvent.Save event) {
         if (!event.getWorld().isRemote() && event.getWorld() instanceof ServerWorld) {
@@ -41,9 +47,7 @@ public class PlayerStatsSaver {
         }
     }
 
-
-
-
+    //data saver to world
     public static class SavedDat extends WorldSavedData implements Supplier {
 
         public CompoundNBT EpicsExtremeNBT = new CompoundNBT();
