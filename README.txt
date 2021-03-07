@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+7/03/2021
+- added bobbing effect to water icons (depending on how low the thirst is correlates to the frequency of the animation)
+
 6/03/2021
 - finally fixed the saving system (hopefully won't break again)
 

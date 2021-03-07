@@ -101,37 +101,49 @@ public class ThirstStuffs {
 
     //*---------------LOGIC---------------*\\
     //render logic
+    private static int animTick = 0;
     public static void renderThirstBar(MatrixStack stack, int x, int y) {
         int fullAmount = (int) thirstValue;
         boolean drawHalf = fullAmount != thirstValue;
+        boolean animate = false;
         int iterator = 0;
+        animTick++;
+        if (thirstValue >= 7.5f && animTick == 800) {
+            animate = true;
+            animTick = 0;
+        } else if (thirstValue >= 5 && animTick == 600) {
+            animate = true;
+            animTick = 0;
+        } else if (thirstValue >= 2.5 && animTick == 400) {
+            animate = true;
+            animTick = 0;
+        } else if (thirstValue >= 0 && animTick == 200) {
+            animate = true;
+            animTick = 0;
+        }
 
-        if (Minecraft.getInstance().player.areEyesInFluid(FluidTags.WATER) || Minecraft.getInstance().player.getAir() < 300) {
-            while (iterator != fullAmount) {
-                draw(stack, x - (iterator * 8), y-9, 0, 0, 9, 9);
-                iterator = iterator + 1;
-            }
-            if (drawHalf) {
-                draw(stack, x - (iterator * 8), y-9, 10, 0, 9, 9);
-                iterator = iterator + 1;
-            }
-            while (iterator != 10) {
-                draw(stack, x - (iterator * 8), y-9, 30, 0, 9, 9);
-                iterator = iterator + 1;
-            }
-        } else {
-            while (iterator != fullAmount) {
-                draw(stack, x - (iterator * 8), y, 0, 0, 9, 9);
-                iterator = iterator + 1;
-            }
-            if (drawHalf) {
-                draw(stack, x - (iterator * 8), y, 10, 0, 9, 9);
-                iterator = iterator + 1;
-            }
-            while (iterator != 10) {
-                draw(stack, x - (iterator * 8), y, 30, 0, 9, 9);
-                iterator = iterator + 1;
-            }
+        if (Minecraft.getInstance().player.areEyesInFluid(FluidTags.WATER) || Minecraft.getInstance().player.getAir() < 300)
+            y = y-9;
+
+        while (iterator != fullAmount) {
+            if (animate) {
+                if ((iterator % 2) == 0) {
+                    draw(stack, x - (iterator * 8), y + 1, 0, 0, 9, 9);
+                } else draw(stack, x - (iterator * 8), y - 1, 0, 0, 9, 9);
+            } else draw(stack, x - (iterator * 8), y, 0, 0, 9, 9);
+            iterator = iterator + 1;
+        }
+        if (drawHalf) {
+            draw(stack, x - (iterator * 8), y, 10, 0, 9, 9);
+            iterator = iterator + 1;
+        }
+        while (iterator != 10) {
+            if (animate) {
+                if ((iterator % 2) == 0) {
+                    draw(stack, x - (iterator * 8), y + 1, 0, 0, 9, 9);
+                } else draw(stack, x - (iterator * 8), y - 1, 0, 0, 9, 9);
+            } else draw(stack, x - (iterator * 8), y, 0, 0, 9, 9);
+            iterator = iterator + 1;
         }
     }
 
