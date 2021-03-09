@@ -1,7 +1,6 @@
 package com.epicnuss55.epicsExtremeSurvival.Events;
 
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
-import com.epicnuss55.epicsExtremeSurvival.Init.PlayerStatsSaver;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
@@ -15,9 +14,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Difficulty;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.EntityLeaveWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -37,11 +33,9 @@ public class ThirstStuffs {
     public void Heal(LivingHealEvent event) {
         if (event.getEntity() instanceof PlayerEntity) {
             if (thirstValue < 8.5f) {
-                EpicsExtremeSurvival.LOGGER.info("Heal Cancelled");
                 event.setCanceled(true);
             } else {
                 Dehydration = Dehydration + REGEN;
-                EpicsExtremeSurvival.LOGGER.info("Healing");
                 event.setCanceled(false);
             }
         }
@@ -49,16 +43,21 @@ public class ThirstStuffs {
 
     //thirst logic
     @SubscribeEvent
-    public void TDehydration(TickEvent.PlayerTickEvent event) {
-        if (event.type == TickEvent.Type.PLAYER && event.phase == TickEvent.Phase.END && !event.player.isCreative()) {
-            if (thirstValue != 0 && event.player.getEntityWorld().getDifficulty() != Difficulty.PEACEFUL)
-                dehydrator(event.player);
+    public void TDehydration(LivingEvent.LivingUpdateEvent event) {
+        if (event.getEntityLiving() instanceof PlayerEntity && !((PlayerEntity) event.getEntityLiving()).isCreative()) {
+            if (thirstValue != 0 && event.getEntityLiving().getEntityWorld().getDifficulty() != Difficulty.PEACEFUL)
+                dehydrator((PlayerEntity) event.getEntityLiving());
+
             if (thirstValue == 0)
                 dehydrated = true;
 
             if (thirstValue < 3f)
-                dehydrationEvent(event.player);
+                dehydrationEvent((PlayerEntity) event.getEntityLiving());
 
+            animate();
+
+            EpicsExtremeSurvival.LOGGER.info(animating);
+            EpicsExtremeSurvival.LOGGER.info(animTick);
         }
     }
 
@@ -101,29 +100,15 @@ public class ThirstStuffs {
 
     //*---------------LOGIC---------------*\\
     //render logic
-    private static int animTick = 0;
     public static void renderThirstBar(MatrixStack stack, int x, int y) {
         int fullAmount = (int) thirstValue;
         boolean drawHalf = fullAmount != thirstValue;
-        boolean animate = false;
-        int iterator = 0;
-        animTick++;
-        if (thirstValue >= 7.5f && animTick == 800) {
-            animate = true;
-            animTick = 0;
-        } else if (thirstValue >= 5 && animTick == 600) {
-            animate = true;
-            animTick = 0;
-        } else if (thirstValue >= 2.5 && animTick == 400) {
-            animate = true;
-            animTick = 0;
-        } else if (thirstValue >= 0 && animTick == 200) {
-            animate = true;
-            animTick = 0;
-        }
 
-        if (Minecraft.getInstance().player.areEyesInFluid(FluidTags.WATER) || Minecraft.getInstance().player.getAir() < 300)
+        int iterator = 0;
+
+        if (Minecraft.getInstance().player.areEyesInFluid(FluidTags.WATER) || Minecraft.getInstance().player.getAir() < 300) {
             y = y-9;
+        }
 
         while (iterator != fullAmount) {
             if (animate) {
@@ -134,17 +119,93 @@ public class ThirstStuffs {
             iterator = iterator + 1;
         }
         if (drawHalf) {
-            draw(stack, x - (iterator * 8), y, 10, 0, 9, 9);
+            if (animate) {
+                if ((iterator % 2) == 0) {
+                    draw(stack, x - (iterator * 8), y + 2, 20, 0, 9, 9);
+                } else draw(stack, x - (iterator * 8), y - 2, 20, 0, 9, 9);
+            } else draw(stack, x - (iterator * 8), y, 10, 0, 9, 9);
             iterator = iterator + 1;
         }
         while (iterator != 10) {
             if (animate) {
                 if ((iterator % 2) == 0) {
-                    draw(stack, x - (iterator * 8), y + 1, 0, 0, 9, 9);
-                } else draw(stack, x - (iterator * 8), y - 1, 0, 0, 9, 9);
-            } else draw(stack, x - (iterator * 8), y, 0, 0, 9, 9);
+                    draw(stack, x - (iterator * 8), y + 1, 30, 0, 9, 9);
+                } else draw(stack, x - (iterator * 8), y - 1, 30, 0, 9, 9);
+            } else draw(stack, x - (iterator * 8), y, 30, 0, 9, 9);
             iterator = iterator + 1;
         }
+    }
+
+    //hunger icon bobbing
+    private static int animTick = 0;
+    private static int animating = 0;
+    private static boolean animate = false;
+    private static void animate() {
+
+        if (!animate) {
+            animTick++;
+            if (thirstValue <= 10 && thirstValue >= 9f && animTick > 160) {
+                animate = true;
+                animTick = 0;
+            } else if (thirstValue <= 8.5f && thirstValue >= 8f && animTick > 140) {
+                animate = true;
+                animTick = 0;
+            } else if (thirstValue <= 7.5f && thirstValue >= 7f && animTick > 120) {
+                animate = true;
+                animTick = 0;
+            } else if (thirstValue <= 6.5f && thirstValue >= 6f && animTick > 100) {
+                animate = true;
+                animTick = 0;
+            } else if (thirstValue <= 5.5f && thirstValue >= 5f && animTick > 80) {
+                animate = true;
+                animTick = 0;
+            } else if (thirstValue <= 4.5f && thirstValue >= 4f && animTick > 50) {
+                animate = true;
+                animTick = 0;
+            } else if (thirstValue <= 3.5f && thirstValue >= 3f && animTick > 30) {
+                animate = true;
+                animTick = 0;
+            } else if (thirstValue <= 2.5f && thirstValue >= 2f && animTick > 15) {
+                animate = true;
+                animTick = 0;
+            } else if (thirstValue <= 1.5f && thirstValue >= 1f && animTick > 10) {
+                animate = true;
+                animTick = 0;
+            } else if (thirstValue <= 0.5f && thirstValue >= 0f && animTick > 5) {
+                animate = true;
+                animTick = 0;
+            }
+        }
+
+        if (animate) {
+            animating++;
+            if (animating > 5) {
+                animate = false;
+                animating = 0;
+            }
+        }
+
+/*
+        if (animating > 5)
+            animating = 0;
+
+        if (animating == 0)
+            animTick++;
+
+        if (((thirstValue >= 0 && thirstValue <= 2.5) && (animTick > 20)) || (animating != 0)) {
+            animate = true;
+            animTick = 0;
+            animating++;
+        } else if ((thirstValue >= 3 && thirstValue <= 6.5) && (animTick > 120) && (animTick == 0)){
+            animate = true;
+            animTick = 0;
+            animating++;
+        } else if (animTick > 240) {
+            animate = true;
+            animTick = 0;
+            animating++;
+        }
+ */
     }
 
     //render simplifier lol
@@ -157,7 +218,6 @@ public class ThirstStuffs {
 
     //when thirst value is below 3 bars, fire this
     public static void dehydrationEvent(PlayerEntity player) {
-        EpicsExtremeSurvival.LOGGER.info("dehydration effects");
         if (player.isSprinting()) player.setSprinting(false);
         if (thirstValue == 0) {
             damageTick++;
@@ -193,7 +253,6 @@ public class ThirstStuffs {
         if (player.isSprinting() && !dehydrated)
             Dehydration = Dehydration + SPRINTING;
 
-        EpicsExtremeSurvival.LOGGER.info(Dehydration);
         if (Dehydration > 50) {
             Dehydration = 0;
             thirstValue = thirstValue - 0.5f;

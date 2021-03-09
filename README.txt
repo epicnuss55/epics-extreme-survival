@@ -15,6 +15,11 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+9/03/2021
+- bobbing effect looks nicer
+- added ability for half water icon to show movement every bob
+- animated frames last for a bit longer
+
 7/03/2021
 - added bobbing effect to water icons (depending on how low the thirst is correlates to the frequency of the animation)
 
