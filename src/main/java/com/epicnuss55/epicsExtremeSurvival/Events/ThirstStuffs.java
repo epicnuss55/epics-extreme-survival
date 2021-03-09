@@ -144,34 +144,25 @@ public class ThirstStuffs {
 
         if (!animate) {
             animTick++;
-            if (thirstValue <= 10 && thirstValue >= 9f && animTick > 160) {
+            if (thirstValue <= 10f && thirstValue >= 9.5f && animTick > 640) {
                 animate = true;
                 animTick = 0;
-            } else if (thirstValue <= 8.5f && thirstValue >= 8f && animTick > 140) {
+            } else if (thirstValue <= 9f && thirstValue >= 8f && animTick > 200) {
                 animate = true;
                 animTick = 0;
-            } else if (thirstValue <= 7.5f && thirstValue >= 7f && animTick > 120) {
+            } else if (thirstValue <= 7.5f && thirstValue >= 6.5f && animTick > 160) {
                 animate = true;
                 animTick = 0;
-            } else if (thirstValue <= 6.5f && thirstValue >= 6f && animTick > 100) {
+            } else if (thirstValue <= 6f && thirstValue >= 5f && animTick > 80) {
                 animate = true;
                 animTick = 0;
-            } else if (thirstValue <= 5.5f && thirstValue >= 5f && animTick > 80) {
+            } else if (thirstValue <= 4.5f && thirstValue >= 3.5f && animTick > 20) {
                 animate = true;
                 animTick = 0;
-            } else if (thirstValue <= 4.5f && thirstValue >= 4f && animTick > 50) {
+            } else if (thirstValue <= 3f && thirstValue >= 2f && animTick > 10) {
                 animate = true;
                 animTick = 0;
-            } else if (thirstValue <= 3.5f && thirstValue >= 3f && animTick > 30) {
-                animate = true;
-                animTick = 0;
-            } else if (thirstValue <= 2.5f && thirstValue >= 2f && animTick > 15) {
-                animate = true;
-                animTick = 0;
-            } else if (thirstValue <= 1.5f && thirstValue >= 1f && animTick > 10) {
-                animate = true;
-                animTick = 0;
-            } else if (thirstValue <= 0.5f && thirstValue >= 0f && animTick > 5) {
+            } else if (thirstValue <= 1.5f && thirstValue >= 0f && animTick > 5) {
                 animate = true;
                 animTick = 0;
             }
