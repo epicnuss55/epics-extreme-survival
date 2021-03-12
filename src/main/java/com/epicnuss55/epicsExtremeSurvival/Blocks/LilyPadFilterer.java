@@ -28,7 +28,7 @@ public class LilyPadFilterer extends Block {
                 Block.makeCuboidShape(7, 13, 12, 9, 14, 15),
                 Block.makeCuboidShape(12, 13, 7, 15, 14, 9),
                 Block.makeCuboidShape(1, 13, 7, 4, 14, 9),
-                Block.makeCuboidShape(1, 1, 1, 15, 8, 15),
+                Block.makeCuboidShape(1, 1, 1, 15, 7, 15),
                 Block.makeCuboidShape(14, 0, 0, 16, 13, 2),
                 Block.makeCuboidShape(14, 0, 14, 16, 13, 16),
                 Block.makeCuboidShape(0, 13, 0, 16, 14, 1),
