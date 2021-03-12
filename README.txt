@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+12/03/2021
+- tweaked the lilypad filter model a bit
+
 11/03/2021
 - added block for the lilypad filtration system [this](inspired by https://www.wateronline.com/doc/sun-activated-lilypads-remove-contaminants-without-chemicals-0001#:~:text=Each%20LilyPad%20can%20treat%201,founder%20and%20CEO%20of%20Puralytics.)
 - added model for the lilypad filtration system (subject to change)
