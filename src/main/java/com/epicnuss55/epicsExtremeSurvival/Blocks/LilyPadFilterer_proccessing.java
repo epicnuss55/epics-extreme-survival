@@ -1,24 +1,20 @@
 package com.epicnuss55.epicsExtremeSurvival.Blocks;
 
+import com.epicnuss55.epicsExtremeSurvival.Init.TileEntityInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 
 import java.util.stream.Stream;
 
-public class LilyPadFilterer extends Block {
-    public LilyPadFilterer(Properties properties) {
+public class LilyPadFilterer_proccessing extends Block {
+    public LilyPadFilterer_proccessing(Properties properties) {
         super(properties);
     }
 
@@ -43,11 +39,12 @@ public class LilyPadFilterer extends Block {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (player.getHeldItem(handIn).getItem().getDefaultInstance().equals(Items.WATER_BUCKET.getDefaultInstance())) {
-            player.setHeldItem(handIn,Items.BUCKET.getDefaultInstance());
-        }
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
 
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return TileEntityInit.Lilypad_filterer_processing.get().create();
     }
 }
