@@ -17,6 +17,7 @@ DD/MM/YYYY
 
 14/03/2021
 - added proccessing and proccessed block states in lilypad filter system
+- added tile entities for proccessed and proccessing block states in lilypad filter system
 
 12/03/2021
 - tweaked the lilypad filter model a bit

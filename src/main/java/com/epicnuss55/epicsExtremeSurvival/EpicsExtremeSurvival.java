@@ -2,6 +2,8 @@ package com.epicnuss55.epicsExtremeSurvival;
 
 import com.epicnuss55.epicsExtremeSurvival.Init.BlockInit;
 import com.epicnuss55.epicsExtremeSurvival.Init.PlayerStatsSaver;
+import com.epicnuss55.epicsExtremeSurvival.Init.TileEntityInit;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
@@ -29,6 +31,7 @@ public class EpicsExtremeSurvival {
         bus.addListener(this::doClientStuff);
         ItemInit.ITEMS.register(bus);
         BlockInit.BLOCKS.register(bus);
+        TileEntityInit.TILES.register(bus);
         instance = this;
         MinecraftForge.EVENT_BUS.register(new ThirstStuffs());
         MinecraftForge.EVENT_BUS.register(new PlayerStatsSaver());
