@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+18/03/2021
+- added block models
+
 14/03/2021
 - added proccessing and proccessed block states in lilypad filter system
 - added tile entities for proccessed and proccessing block states in lilypad filter system

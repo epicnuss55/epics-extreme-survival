@@ -1,5 +1,22 @@
 {
   "variants": {
-    "": { "model": "epicsextremesurvival:block/lily_pad_filterer" }
-  }
+    "waterlevel=0": { "model": "epicsextremesurvival:block/lily_pad_filterer" },
+    "waterlevel=1": { "model": "epicsextremesurvival:block/lily_pad_filterer1" },
+    "waterlevel=2": { "model": "epicsextremesurvival:block/lily_pad_filterer2" },
+    "waterlevel=3": { "model": "epicsextremesurvival:block/lily_pad_filterer3" },
+    "waterlevel=4": { "model": "epicsextremesurvival:block/lily_pad_filterer4" },
+    "waterlevel=5": { "model": "epicsextremesurvival:block/lily_pad_filterer5" },
+    "waterlevel=6": { "model": "epicsextremesurvival:block/lily_pad_filterer6" },
+    "waterlevel=7": { "model": "epicsextremesurvival:block/lily_pad_filterer7" },
+    "waterlevel=8": { "model": "epicsextremesurvival:block/lily_pad_filterer8" },
+    "waterlevel=9": { "model": "epicsextremesurvival:block/lily_pad_filterer9" },
+    "waterlevel=10": { "model": "epicsextremesurvival:block/lily_pad_filterer10" },
+    "waterlevel=11": { "model": "epicsextremesurvival:block/lily_pad_filterer11" },
+    "waterlevel=12": { "model": "epicsextremesurvival:block/lily_pad_filterer12" },
+    "waterlevel=13": { "model": "epicsextremesurvival:block/lily_pad_filterer13" },
+    "waterlevel=14": { "model": "epicsextremesurvival:block/lily_pad_filterer14" },
+    "waterlevel=15": { "model": "epicsextremesurvival:block/lily_pad_filterer15" },
+    "waterlevel=16": { "model": "epicsextremesurvival:block/lily_pad_filterer16" },
+    "waterlevel=17": { "model": "epicsextremesurvival:block/lily_pad_filterer17" }
+    }
 }
