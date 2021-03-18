@@ -17,6 +17,7 @@ DD/MM/YYYY
 
 18/03/2021
 - added block models
+- removed tile entity (probably would add back later)
 
 14/03/2021
 - added proccessing and proccessed block states in lilypad filter system
