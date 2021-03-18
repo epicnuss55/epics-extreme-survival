@@ -19,7 +19,7 @@ DD/MM/YYYY
 - added block models
 - removed tile entity (probably would add back later)
 - changed textures
-- added functionality to lilypad filter
+- added functionality to lilypad filter (HEAVILY BUGGED)
 
 14/03/2021
 - added proccessing and proccessed block states in lilypad filter system
