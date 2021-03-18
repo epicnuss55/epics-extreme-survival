@@ -1,9 +1,7 @@
 package com.epicnuss55.epicsExtremeSurvival.Init;
 
 import com.epicnuss55.epicsExtremeSurvival.Blocks.LilyPadFilterer;
-import com.epicnuss55.epicsExtremeSurvival.Blocks.LilyPadFilterer_proccessing;
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.ToolType;
@@ -17,14 +15,7 @@ public class BlockInit {
     /*-------------------------------------------BLOCKS-------------------------------------------*/
     /*----------------------Lily pad filter----------------------*/
     public static final RegistryObject<Block> LilyPadFilterBlock = BLOCKS.register("lily_pad_filterer", () ->
-            new LilyPadFilterer(AbstractBlock.Properties.create(Material.ROCK)
-                    .harvestTool(ToolType.PICKAXE)
-                    .harvestLevel(1)
-                    .setRequiresTool()
-                    .hardnessAndResistance(1f,4)
-            ));
-    public static final RegistryObject<Block> LilyPadFilterBlock_Proccessing = BLOCKS.register("lily_pad_filterer_proccessing", () ->
-            new LilyPadFilterer_proccessing(AbstractBlock.Properties.create(Material.ROCK)
+            new LilyPadFilterer(Block.Properties.create(Material.ROCK)
                     .harvestTool(ToolType.PICKAXE)
                     .harvestLevel(1)
                     .setRequiresTool()
