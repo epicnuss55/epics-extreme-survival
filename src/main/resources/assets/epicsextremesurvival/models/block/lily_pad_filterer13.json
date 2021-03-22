@@ -6,8 +6,9 @@
 		"3": "minecraft:block/cauldron_bottom",
 		"4": "minecraft:block/iron_block",
 		"5": "minecraft:block/stone",
-		"6": "minecraft:blocks/cleanwater",
-		"7": "minecraft:blocks/uncleanwater",
+		"6": "epicsextremesurvival:blocks/cleanwater",
+		"7": "epicsextremesurvival:blocks/uncleanwaterstill",
+		"8": "epicsextremesurvival:blocks/uncleanwatermoving",
 		"particle": "minecraft:block/stone"
 	},
 	"elements": [
@@ -588,12 +589,12 @@
 			"to": [11, 15.75, 11],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 10, 8]},
 			"faces": {
-				"north": {"uv": [1, 0, 7, 6], "texture": "#7"},
-				"east": {"uv": [6, 5, 12, 11], "texture": "#7"},
-				"south": {"uv": [1, 0, 7, 6], "texture": "#7"},
-				"west": {"uv": [1, 0, 7, 6], "texture": "#7"},
-				"up": {"uv": [1, 0, 7, 6], "texture": "#7"},
-				"down": {"uv": [1, 0, 7, 6], "texture": "#7"}
+				"north": {"uv": [6, 3, 12, 9], "texture": "#7"},
+				"east": {"uv": [6, 3, 12, 9], "texture": "#7"},
+				"south": {"uv": [6, 3, 12, 9], "texture": "#7"},
+				"west": {"uv": [6, 3, 12, 9], "texture": "#7"},
+				"up": {"uv": [6, 3, 12, 9], "texture": "#7"},
+				"down": {"uv": [6, 3, 12, 9], "texture": "#7"}
 			}
 		},
 		{
@@ -601,12 +602,12 @@
 			"to": [9, 8.75, 9],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 10, 8]},
 			"faces": {
-				"north": {"uv": [3, 4, 5, 7], "texture": "#7"},
-				"east": {"uv": [10, 6, 12, 9], "texture": "#7"},
-				"south": {"uv": [7, 4, 9, 7], "texture": "#7"},
-				"west": {"uv": [2, 10, 4, 13], "texture": "#7"},
-				"up": {"uv": [3, 4, 5, 7], "texture": "#7"},
-				"down": {"uv": [3, 4, 5, 7], "texture": "#7"}
+				"north": {"uv": [3, 4, 5, 7], "texture": "#8"},
+				"east": {"uv": [10, 6, 12, 9], "texture": "#8"},
+				"south": {"uv": [7, 4, 9, 7], "texture": "#8"},
+				"west": {"uv": [2, 10, 4, 13], "texture": "#8"},
+				"up": {"uv": [3, 4, 5, 7], "texture": "#missing"},
+				"down": {"uv": [3, 4, 5, 7], "texture": "#missing"}
 			}
 		},
 		{

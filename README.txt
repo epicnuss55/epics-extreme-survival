@@ -15,6 +15,11 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+22/03/2021
+- changed the lilypad filter model abit
+- added dirty water animations
+- added clean water animations
+
 18/03/2021
 - added block models
 - removed tile entity (probably would add back later)
