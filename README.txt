@@ -19,6 +19,7 @@ DD/MM/YYYY
 - changed the lilypad filter model abit
 - added dirty water animations
 - added clean water animations
+- added lilypad filterer crafting recipe
 
 18/03/2021
 - added block models

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["iii", "sbs", "scs"],
+  "key": {
+    "s": {
+      "item": "minecraft:stone"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    },
+    "c": {
+      "item": "minecraft:cauldron"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "epicsextremesurvival:lily_pad_filterer"
+  }
+}
