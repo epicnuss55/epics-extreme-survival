@@ -56,8 +56,6 @@ public class ThirstStuffs {
 
             animate();
 
-            EpicsExtremeSurvival.LOGGER.info(animating);
-            EpicsExtremeSurvival.LOGGER.info(animTick);
         }
     }
 
@@ -276,6 +274,13 @@ public class ThirstStuffs {
         }
     }
 
+    //Thirst adder
+    public static void AddThirst(float added) {
+        float finalVal = added + thirstValue;
+        if (finalVal <= 10) {
+            thirstValue = finalVal;
+        } else thirstValue = 10f;
+    }
 
     //Thirst save system
     public static final String THIRST_NBT = "thirstval";

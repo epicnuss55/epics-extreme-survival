@@ -21,6 +21,7 @@ DD/MM/YYYY
 - added clean water animations
 - added lilypad filterer crafting recipe
 - added lilypad filterer to the lang
+- added an addWater method
 
 18/03/2021
 - added block models
