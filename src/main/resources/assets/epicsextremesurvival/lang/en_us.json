@@ -1,4 +1,5 @@
 {
   "itemGroup.epics_extreme_survival_item_group": "Epic's Extreme Survival",
-  "item.epicsextremesurvival.test_item": "test item"
+  "item.epicsextremesurvival.test_item": "test item",
+  "block.epicsextremesurvival.lily_pad_filterer": "Lily Pad Water Filter"
 }
