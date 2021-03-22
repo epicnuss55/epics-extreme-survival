@@ -1,8 +1,11 @@
 package com.epicnuss55.epicsExtremeSurvival.Blocks;
 
+import com.epicnuss55.epicsExtremeSurvival.Events.ThirstStuffs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.IntegerProperty;
@@ -44,217 +47,141 @@ public class LilyPadFilterer extends Block {
                 Block.makeCuboidShape(14, 0, 14, 16, 13, 16),
                 Block.makeCuboidShape(0, 13, 0, 16, 14, 1),
                 Block.makeCuboidShape(0, 13, 15, 16, 14, 16)
-        ).reduce((v1, v2) -> {return VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR);}).get();
+        ).reduce((v1, v2) -> {
+            return VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR);
+        }).get();
     }
 
     @Override
-        public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        int waterVal = state.get(LilyPadFilterer_WaterAmount).intValue();
+        Item item = player.getHeldItem(handIn).getItem();
         if (!worldIn.isRemote()) {
-            int waterVal = state.get(LilyPadFilterer_WaterAmount).intValue();
-
-            switch (waterVal) {
-                case 0: {
-                    if (player.getHeldItem(handIn).getItem().equals(Items.WATER_BUCKET)) {
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                        worldIn.addParticle(ParticleTypes.SPLASH, pos.getX(), pos.getY(), pos.getZ(), 1, 0.5, 1);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 2, 1, false);
-                        setWaterLevel(worldIn, pos, state, 16);
-                    }
-                    break;
+            if (waterVal == 17) {
+                setWaterLevel(worldIn, pos, state, 5);
+                return ActionResultType.SUCCESS;
+            }
+            if (waterVal == 16) {
+                setWaterLevel(worldIn, pos, state, 17);
+                return ActionResultType.SUCCESS;
+            }
+            if (waterVal >= 0 && waterVal <= 5) {
+                if (waterVal == 0 && item == Items.WATER_BUCKET) {
+                    player.setHeldItem(handIn, new ItemStack(Items.BUCKET));
+                    setWaterLevel(worldIn, pos, state, 16);
+                    return ActionResultType.CONSUME;
+                } else if (item == Items.WATER_BUCKET) {
+                    player.setHeldItem(handIn, new ItemStack(Items.BUCKET));
+                    setWaterLevel(worldIn, pos, state, waterVal + 5);
+                    return ActionResultType.CONSUME;
+                } else if (waterVal > 0){
+                    setWaterLevel(worldIn, pos, state, waterVal - 1);
+                    ThirstStuffs.AddThirst(1.5f);
+                    return ActionResultType.SUCCESS;
                 }
-                case 1: {
-                    if (player.getHeldItem(handIn).getItem().equals(Items.WATER_BUCKET.getItem())) {
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                        worldIn.addParticle(ParticleTypes.SPLASH, pos.getX(), pos.getY(), pos.getZ(), 1, 0.5, 1);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 2, 1, false);
-                        setWaterLevel(worldIn, pos, state, 6);
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                    } else {
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 0);
-                    }
-                    break;
-                }
-                case 2: {
-                    if (player.getHeldItem(handIn).getItem().equals(Items.WATER_BUCKET.getItem())) {
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                        worldIn.addParticle(ParticleTypes.SPLASH, pos.getX(), pos.getY(), pos.getZ(), 1, 0.5, 1);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 2, 1, false);
-                        setWaterLevel(worldIn, pos, state, 7);
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                    } else {
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 1);
-                    }
-                    break;
-                }
-                case 3: {
-                    if (player.getHeldItem(handIn).getItem().equals(Items.WATER_BUCKET.getItem())) {
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                        worldIn.addParticle(ParticleTypes.SPLASH, pos.getX(), pos.getY(), pos.getZ(), 1, 0.5, 1);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 2, 1, false);
-                        setWaterLevel(worldIn, pos, state, 8);
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                    } else {
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 2);
-                    }
-                    break;
-                }
-                case 4: {
-                    if (player.getHeldItem(handIn).getItem().equals(Items.WATER_BUCKET.getItem())) {
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                        worldIn.addParticle(ParticleTypes.SPLASH, pos.getX(), pos.getY(), pos.getZ(), 1, 0.5, 1);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 2, 1, false);
-                        setWaterLevel(worldIn, pos, state, 9);
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                    } else {
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 3);
-                    }
-                    break;
-                }
-                case 5: {
-                    if (player.getHeldItem(handIn).getItem().equals(Items.WATER_BUCKET.getItem())) {
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                        worldIn.addParticle(ParticleTypes.SPLASH, pos.getX(), pos.getY(), pos.getZ(), 1, 0.5, 1);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 2, 1, false);
-                        setWaterLevel(worldIn, pos, state, 10);
-                        player.setHeldItem(handIn, Items.BUCKET.getDefaultInstance());
-                    } else {
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 4);
-                    }
-                    break;
-                }
-                case 6: {
-                    if (player.isCrouching()) {
-                        worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 1, 2, false);
-                        setWaterLevel(worldIn, pos, state, 11);
-                    } else {
-                        worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 16);
-                    }
-                    break;
-                }
-                case 7: {
-                    if (player.isCrouching()) {
-                        worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 1, 2, false);
-                        setWaterLevel(worldIn, pos, state, 12);
-                    } else {
-                        worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 6);
-                    }
-                    break;
-                }
-                case 8: {
-                    if (player.isCrouching()) {
-                        worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 1, 2, false);
-                        setWaterLevel(worldIn, pos, state, 13);
-                    } else {
-                        worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 7);
-                    }
-                    break;
-                }
-                case 9: {
-                    if (player.isCrouching()) {
-                        worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 1, 2, false);
-                        setWaterLevel(worldIn, pos, state, 14);
-                    } else {
-                        worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 8);
-                    }
-                    break;
-                }
-                case 10: {
-                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                    worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
+            } else if (waterVal >= 6 && waterVal <= 10) {
+                if (waterVal == 10) {
                     setWaterLevel(worldIn, pos, state, 9);
-                    break;
-                }
-                case 11: {
+                } else if (waterVal == 6) {
                     if (player.isCrouching()) {
-                        worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 1, 2, false);
+                        setWaterLevel(worldIn, pos, state, waterVal + 5);
+                    } else {
+                        setWaterLevel(worldIn, pos, state, 16);
+                    }
+                } else {
+                    if (player.isCrouching()) {
+                        setWaterLevel(worldIn, pos, state, waterVal + 5);
+                    } else {
+                        setWaterLevel(worldIn, pos, state, waterVal - 1);
+                        ThirstStuffs.AddThirst(1.5f);                    }
+                }
+                return ActionResultType.SUCCESS;
+            } else if (waterVal >= 11 && waterVal <= 15) {
+                if (waterVal == 11) {
+                    if (player.isCrouching()) {
                         setWaterLevel(worldIn, pos, state, 5);
                     } else {
-                        worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
                         setWaterLevel(worldIn, pos, state, 17);
                     }
-                    break;
-                }
-                case 12: {
+                } else {
                     if (player.isCrouching()) {
-                        worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 1, 2, false);
                         setWaterLevel(worldIn, pos, state, 5);
                     } else {
-                        worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 11);
+                        setWaterLevel(worldIn, pos, state, waterVal - 1);
+                        ThirstStuffs.AddThirst(1.5f);
                     }
-                    break;
                 }
-                case 13: {
-                    if (player.isCrouching()) {
-                        worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 1, 2, false);
-                        setWaterLevel(worldIn, pos, state, 5);
-                    } else {
-                        worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 12);
-                    }
-                    break;
+                return ActionResultType.SUCCESS;
+            }
+        } else {
+            if (waterVal == 17) {
+                worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
+                worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ() + 1, 0, 1, 0);
+                worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
+                worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY() + 1, pos.getZ(), 0, 1, 0);
+                worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
+                worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 1, pos.getY(), pos.getZ(), 0, 1, 0);
+                worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1, 0.7f, false);
+            }
+            if (waterVal == 16) {
+                worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.5, 1.5, 0.5);
+                worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.5, 1.5, -0.5);
+                worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.5, 1.5, -0.5);
+                worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.5, 1.5, 0.5);
+                worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.25, 1.5, 0.25);
+                worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.25, 1.5, -0.25);
+                worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.BLOCK_LILY_PAD_PLACE, SoundCategory.NEUTRAL, 1, 1.2f, false);
+            }
+            if (waterVal >= 0 && waterVal <= 5) {
+                if (item == Items.WATER_BUCKET) {
+                    worldIn.addParticle(ParticleTypes.SPLASH, pos.getX(), pos.getY() + 1, pos.getZ() + Math.random(), 1, 0.5, 1);
+                    worldIn.addParticle(ParticleTypes.SPLASH, pos.getX(), pos.getY() + 1, pos.getZ() + Math.random(), 1, 0.5, 1);
+                    worldIn.addParticle(ParticleTypes.SPLASH, pos.getX() + Math.random(), pos.getY() + 1, pos.getZ(), 1, 0.5, 1);
+                    worldIn.addParticle(ParticleTypes.SPLASH, pos.getX() + Math.random(), pos.getY() + 1, pos.getZ(), 1, 0.5, 1);
+                    worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 2, 0.7f, false);
+                } else if (waterVal > 0){
+                    worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.NEUTRAL, 1, 1, false);
                 }
-                case 14: {
-                    if (player.isCrouching()) {
-                        worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 1, 2, false);
-                        setWaterLevel(worldIn, pos, state, 5);
-                    } else {
-                        worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 13);
-                    }
-                    break;
-                }
-                case 15: {
-                    if (player.isCrouching()) {
-                        worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
-                        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.BLOCKS, 1, 2, false);
-                        setWaterLevel(worldIn, pos, state, 5);
-                    } else {
-                        worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.PLAYERS, 1, 1, false);
-                        setWaterLevel(worldIn, pos, state, 14);
-                    }
-                    break;
-                }
-                case 16: {
-                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX(), pos.getY(), pos.getZ(), 0, 3, 0);
-                    setWaterLevel(worldIn, pos, state, 17);
-                    break;
-                }
-                case 17: {
+            } else if (waterVal >= 6 && waterVal <= 10) {
+                if (player.isCrouching()) {
                     worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
-                    setWaterLevel(worldIn, pos, state, 5);
-                    break;
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ() + 1, 0, 1, 0);
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY() + 1, pos.getZ(), 0, 1, 0);
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 1, pos.getY(), pos.getZ(), 0, 1, 0);
+                    worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LILY_PAD_PLACE, SoundCategory.BLOCKS, 1, 1.2f, false);
+                } else {
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.5, 1.5, 0.5);
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.5, 1.5, -0.5);
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.5, 1.5, -0.5);
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.5, 1.5, 0.5);
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.25, 1.5, 0.25);
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.25, 1.5, -0.25);
+                    worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.NEUTRAL, 1, 1, false);
+                }
+            } else if (waterVal >= 11 && waterVal <= 15) {
+                if (player.isCrouching()) {
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ() + 1, 0, 1, 0);
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY() + 1, pos.getZ(), 0, 1, 0);
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 0, 1, 0);
+                    worldIn.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 1, pos.getY(), pos.getZ(), 0, 1, 0);
+                    worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1, 0.7f, false);
+                } else {
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.5, 1.5, 0.5);
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.5, 1.5, -0.5);
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.5, 1.5, -0.5);
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.5, 1.5, 0.5);
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.25, 1.5, 0.25);
+                    worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.25, 1.5, -0.25);
+                    worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.NEUTRAL, 1, 1, false);
                 }
             }
+            return ActionResultType.func_233537_a_(worldIn.isRemote());
         }
-
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return ActionResultType.PASS;
     }
 
     private static void setWaterLevel(World worldIn, BlockPos pos, BlockState state, int level) {

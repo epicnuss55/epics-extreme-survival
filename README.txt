@@ -22,6 +22,7 @@ DD/MM/YYYY
 - added lilypad filterer crafting recipe
 - added lilypad filterer to the lang
 - added an addWater method
+- finished the lilypad filterer logic
 
 18/03/2021
 - added block models
