@@ -17,6 +17,7 @@ DD/MM/YYYY
 
 26/03/2021
 - added new Bamboo filterer (basically a portable lilypad filterer)
+- added bamboo filterer full state
 
 22/03/2021
 - changed the lilypad filter model abit
