@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+26/03/2021
+- added new Bamboo filterer (basically a portable lilypad filterer)
+
 22/03/2021
 - changed the lilypad filter model abit
 - added dirty water animations

@@ -1,6 +1,9 @@
 package com.epicnuss55.epicsExtremeSurvival.Init;
 
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
+import com.epicnuss55.epicsExtremeSurvival.Items.BambooFilter_empty;
+import com.epicnuss55.epicsExtremeSurvival.Items.BambooFilter_fill;
+import com.epicnuss55.epicsExtremeSurvival.Items.testItem;
 import net.minecraft.item.BlockItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,5 +29,22 @@ public class ItemInit {
             new BlockItem(BlockInit.LilyPadFilterBlock.get(), new Item.Properties()
                     .maxStackSize(64)
                     .group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE)
+            ));
+
+    /*----------------------Bamboo Filter----------------------*/
+    public static final RegistryObject<Item> bambooFilter_empty = ITEMS.register("bamboofilter_empty", ()->
+            new BambooFilter_empty(new Item.Properties().
+                    group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
+                    setNoRepair().
+                    maxStackSize(1).
+                    maxDamage(30)
+            ));
+    public static final RegistryObject<Item> bambooFilter_fill = ITEMS.register("bamboofilter_fill", ()->
+            new BambooFilter_fill(new Item.Properties().
+                    group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
+                    setNoRepair().
+                    maxStackSize(1).
+                    maxDamage(30).
+                    containerItem(bambooFilter_empty.get())
             ));
 }
