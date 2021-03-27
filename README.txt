@@ -16,6 +16,8 @@ DD/MM/YYYY
 //CHANGELOGS
 
 27/03/2021
+- purified water lang
+- purified water texture
 - added the ability for lily pad filterer to give purified water
 - added purified water bottle
 - changed up the drink water bottle event
