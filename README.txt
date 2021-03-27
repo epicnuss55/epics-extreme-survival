@@ -15,8 +15,13 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+27/03/2021
+- added bamboo filter recipe
+- added bamboo filter textures
+- added bamboo filter lang
+
 26/03/2021
-- added new Bamboo filterer (basically a portable lilypad filterer)
+- added new bamboo filterer (basically a portable lilypad filterer with limitations)
 - added bamboo filterer full state
 - added bamboo filterer empty state
 

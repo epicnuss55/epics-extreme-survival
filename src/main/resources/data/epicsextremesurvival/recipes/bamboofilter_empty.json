@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["g g", "sbs", "c c"],
+  "key": {
+    "b": {
+      "item": "minecraft:bamboo"
+    },
+    "g": {
+      "item": "minecraft:gravel"
+    },
+    "s": {
+      "tag": "minecraft:sand"
+    },
+    "c": {
+      "tag": "minecraft:coals"
+    }
+    },
+  "result": {
+    "item": "epicsextremesurvival:bamboofilter_empty"
+  }
+}
