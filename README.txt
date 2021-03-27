@@ -16,6 +16,8 @@ DD/MM/YYYY
 //CHANGELOGS
 
 27/03/2021
+- changed up the drink water bottle event
+- added honey to the drink water bottle event
 - added bamboo filter recipe
 - added bamboo filter textures
 - added bamboo filter lang

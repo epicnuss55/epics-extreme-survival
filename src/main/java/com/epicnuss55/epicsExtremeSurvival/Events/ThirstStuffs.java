@@ -62,13 +62,10 @@ public class ThirstStuffs {
     //If drinks any bottled liquids then adds half a bar back
     @SubscribeEvent
     public void DrinkWater(LivingEntityUseItemEvent.Finish event) {
-        if (event.getResultStack().getItem() == Items.GLASS_BOTTLE.getItem() && event.getEntity().getEntityWorld().isRemote()) {
-            float updateValue = thirstValue + 0.5f;
-            if (updateValue <= 10)
-                thirstValue = updateValue;
-            Dehydration = 0;
-            dehydrated = false;
-        }
+        if (event.getResultStack().getItem() == Items.GLASS_BOTTLE.getItem() && event.getEntity().getEntityWorld().isRemote())
+            AddThirst(0.5f);
+        if (event.getResultStack().getItem() == Items.HONEY_BOTTLE.getItem() && event.getEntity().getEntityWorld().isRemote())
+            AddThirst(1f);
     }
 
     //after the player dies and respawns, thirst value resets
