@@ -1,6 +1,7 @@
 package com.epicnuss55.epicsExtremeSurvival.Blocks;
 
 import com.epicnuss55.epicsExtremeSurvival.Events.ThirstStuffs;
+import com.epicnuss55.epicsExtremeSurvival.Init.ItemInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -75,8 +76,11 @@ public class LilyPadFilterer extends Block {
                     setWaterLevel(worldIn, pos, state, waterVal + 5);
                     return ActionResultType.CONSUME;
                 } else if (waterVal > 0){
+                    if (item == Items.GLASS_BOTTLE)
+                        player.setHeldItem(handIn, new ItemStack(ItemInit.Purified_Water.get()));
+                    else
+                        ThirstStuffs.AddThirst(1.5f);
                     setWaterLevel(worldIn, pos, state, waterVal - 1);
-                    ThirstStuffs.AddThirst(1.5f);
                     return ActionResultType.SUCCESS;
                 }
             } else if (waterVal >= 6 && waterVal <= 10) {
@@ -93,7 +97,12 @@ public class LilyPadFilterer extends Block {
                         setWaterLevel(worldIn, pos, state, waterVal + 5);
                     } else {
                         setWaterLevel(worldIn, pos, state, waterVal - 1);
-                        ThirstStuffs.AddThirst(1.5f);                    }
+
+                        if (item == Items.GLASS_BOTTLE)
+                            player.setHeldItem(handIn, new ItemStack(ItemInit.Purified_Water.get()));
+                        else
+                        ThirstStuffs.AddThirst(1.5f);
+                    }
                 }
                 return ActionResultType.SUCCESS;
             } else if (waterVal >= 11 && waterVal <= 15) {
@@ -108,7 +117,10 @@ public class LilyPadFilterer extends Block {
                         setWaterLevel(worldIn, pos, state, 5);
                     } else {
                         setWaterLevel(worldIn, pos, state, waterVal - 1);
-                        ThirstStuffs.AddThirst(1.5f);
+                        if (item == Items.GLASS_BOTTLE)
+                            player.setHeldItem(handIn, new ItemStack(ItemInit.Purified_Water.get()));
+                        else
+                            ThirstStuffs.AddThirst(1.5f);
                     }
                 }
                 return ActionResultType.SUCCESS;
@@ -140,7 +152,10 @@ public class LilyPadFilterer extends Block {
                     worldIn.addParticle(ParticleTypes.SPLASH, pos.getX() + Math.random(), pos.getY() + 1, pos.getZ(), 1, 0.5, 1);
                     worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 2, 0.7f, false);
                 } else if (waterVal > 0){
-                    worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.NEUTRAL, 1, 1, false);
+                    if (item == Items.GLASS_BOTTLE)
+                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1, 1, false);
+                    else
+                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.NEUTRAL, 1, 1, false);
                 }
             } else if (waterVal >= 6 && waterVal <= 10) {
                 if (player.isCrouching()) {
@@ -158,7 +173,11 @@ public class LilyPadFilterer extends Block {
                     worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.5, 1.5, 0.5);
                     worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.25, 1.5, 0.25);
                     worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.25, 1.5, -0.25);
-                    worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.NEUTRAL, 1, 1, false);
+
+                    if (item == Items.GLASS_BOTTLE)
+                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1, 1, false);
+                    else
+                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.NEUTRAL, 1, 1, false);
                 }
             } else if (waterVal >= 11 && waterVal <= 15) {
                 if (player.isCrouching()) {
@@ -176,7 +195,11 @@ public class LilyPadFilterer extends Block {
                     worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.5, 1.5, 0.5);
                     worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.25, 1.5, 0.25);
                     worldIn.addParticle(ParticleTypes.BUBBLE_COLUMN_UP, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, -0.25, 1.5, -0.25);
-                    worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.NEUTRAL, 1, 1, false);
+
+                    if (item == Items.GLASS_BOTTLE)
+                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1, 1, false);
+                    else
+                        worldIn.playSound(player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.NEUTRAL, 1, 1, false);
                 }
             }
             return ActionResultType.func_233537_a_(worldIn.isRemote());
