@@ -16,6 +16,7 @@ DD/MM/YYYY
 //CHANGELOGS
 
 28/03/2021
+- added registered the juices
 - added apple juice
 - added beetroot juice
 - added carrot juice
