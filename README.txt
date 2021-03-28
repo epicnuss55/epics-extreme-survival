@@ -15,6 +15,17 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+28/03/2021
+- added apple juice
+- added beetroot juice
+- added carrot juice
+- added chorus fruit juice
+- added enchanted golden apple juice
+- added golden apple juice
+- added golden carrot juice
+- added melon juice
+- added sweet berry juice
+
 27/03/2021
 - purified water lang
 - purified water texture
