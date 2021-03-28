@@ -16,6 +16,7 @@ DD/MM/YYYY
 //CHANGELOGS
 
 28/03/2021
+- added enchanted golden apple juice glint
 - made juices texture
 - added juices textures
 - added registered the juices

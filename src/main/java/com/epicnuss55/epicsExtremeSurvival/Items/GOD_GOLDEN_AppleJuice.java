@@ -23,6 +23,11 @@ public class GOD_GOLDEN_AppleJuice extends Item {
     }
 
     @Override
+    public boolean hasEffect(ItemStack stack) {
+        return true;
+    }
+
+    @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
         entityLiving.addPotionEffect(new EffectInstance(Effects.REGENERATION, 400, 1));
         entityLiving.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 6000, 0));
