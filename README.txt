@@ -16,6 +16,7 @@ DD/MM/YYYY
 //CHANGELOGS
 
 31/03/2021
+- added crafting for all the juices
 - Added lang for all the juices
 - Added ability for Chorus Fruit Juice to teleport you randomly
 
