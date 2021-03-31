@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+31/03/2021
+- Added lang for all the juices
+
 28/03/2021
 - added enchanted golden apple juice glint
 - made juices texture

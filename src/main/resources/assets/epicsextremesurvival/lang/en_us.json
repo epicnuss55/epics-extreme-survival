@@ -4,5 +4,13 @@
   "item.epicsextremesurvival.bamboofilter_empty": "Bamboo Filter",
   "item.epicsextremesurvival.bamboofilter_fill": "Bamboo Filter",
   "item.epicsextremesurvival.purified_water": "Purified Water",
+  "item.epicsextremesurvival.apple_juice": "Apple Juice",
+  "item.epicsextremesurvival.beetroot_juice": "Beetroot Juice",
+  "item.epicsextremesurvival.carrot_juice": "Carrot Juice",
+  "item.epicsextremesurvival.chorusfruit_juice": "Chorus Fruit Juice",
+  "item.epicsextremesurvival.enchantedgoldenapple_juice": "Golden Apple Juice",
+  "item.epicsextremesurvival.goldenapple_juice": "Golden Apple Juice",
+  "item.epicsextremesurvival.melon_juice": "Melon Juice",
+  "item.epicsextremesurvival.sweetberry_juice": "Sweet Berry Juice",
   "block.epicsextremesurvival.lily_pad_filterer": "Lily Pad Water Filter"
 }
