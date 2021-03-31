@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:golden_carrot"
+    },
+    {
+      "item": "epicsextremesurvival:purified_water"
+    }
+  ],
+  "result": {
+    "item": "epicsextremesurvival:goldencarrot_juice"
+  }
+}

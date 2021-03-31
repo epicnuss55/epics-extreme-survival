@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:apple"
+    },
+    {
+      "item": "epicsextremesurvival:purified_water"
+    }
+  ],
+  "result": {
+    "item": "epicsextremesurvival:apple_juice"
+  }
+}

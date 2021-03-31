@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "epicsextremesurvival:purified_water"
+    }
+  ],
+  "result": {
+    "item": "epicsextremesurvival:sweetberry_juice"
+  }
+}
