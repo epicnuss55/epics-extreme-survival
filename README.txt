@@ -17,6 +17,7 @@ DD/MM/YYYY
 
 31/03/2021
 - Added lang for all the juices
+- Added ability for Chorus Fruit Juice to teleport you randomly
 
 28/03/2021
 - added enchanted golden apple juice glint
