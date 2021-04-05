@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+5/04/2021
+- made a custom temperature register (for each biome)
+
 31/03/2021
 - added crafting for all the juices
 - Added lang for all the juices
