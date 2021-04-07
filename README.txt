@@ -15,7 +15,11 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
-5/04/2021
+07/04/2021
+- added ocean, plains, desert, mountains, forest and taiga temperature registries
+- added temperature increase/decrease
+
+05/04/2021
 - made a custom temperature register (for each biome)
 
 31/03/2021
@@ -82,23 +86,23 @@ DD/MM/YYYY
 - added model for the lilypad filtration system (subject to change)
 - added ModBlock register
 
-9/03/2021
+09/03/2021
 - bobbing effect looks nicer
 - added ability for half water icon to show movement every bob
 - animated frames last for a bit longer
 
-7/03/2021
+07/03/2021
 - added bobbing effect to water icons (depending on how low the thirst is correlates to the frequency of the animation)
 
-6/03/2021
+06/03/2021
 - finally fixed the saving system (hopefully won't break again)
 
-3/03/2021
+03/03/2021
 - fixed bug where thirst was depleting in creative mode
 - fixed bug where thirst would deplete in peaceful mode and kill you on easy and normal
 - fixed up thirst saving system
 
-1/03/2021
+01/03/2021
 - all thirst related bugs (probably) fixed
 - balanced dehydration
 - fixed player not being damaged when suffering from terminal dehydration bug
