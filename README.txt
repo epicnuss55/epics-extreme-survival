@@ -18,6 +18,7 @@ DD/MM/YYYY
 07/04/2021
 - added ocean, plains, desert, mountains, forest and taiga temperature registries
 - added temperature increase/decrease
+- added golden carrot juice lang
 
 05/04/2021
 - made a custom temperature register (for each biome)
