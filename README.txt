@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+08/04/2021
+- added temperature registries for biomes 6 to 15 (numerical id)
+
 07/04/2021
 - added ocean, plains, desert, mountains, forest and taiga temperature registries
 - added temperature increase/decrease

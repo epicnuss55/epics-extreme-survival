@@ -69,10 +69,20 @@ public class TemperatureStuffs {
 
     public static void RegisterVanillaBiomes() {
         RegisterNewBiomeTemperature(Biomes.OCEAN.getLocation().toString(), 40, false);
-        RegisterNewBiomeTemperature(Biomes.PLAINS.getLocation().toString(), 50, true);
-        RegisterNewBiomeTemperature(Biomes.DESERT.getLocation().toString(), 70, true);
+        RegisterNewBiomeTemperature(Biomes.PLAINS.getLocation().toString(), 40, true);
+        RegisterNewBiomeTemperature(Biomes.DESERT.getLocation().toString(), 60, true);
         RegisterNewBiomeTemperature(Biomes.MOUNTAINS.getLocation().toString(), 40, false);
-        RegisterNewBiomeTemperature(Biomes.FOREST.getLocation().toString(), 50, true);
-        RegisterNewBiomeTemperature(Biomes.TAIGA.getLocation().toString(), 50, false);
+        RegisterNewBiomeTemperature(Biomes.FOREST.getLocation().toString(), 45, true);
+        RegisterNewBiomeTemperature(Biomes.TAIGA.getLocation().toString(), 40, false);
+        RegisterNewBiomeTemperature(Biomes.SWAMP.getLocation().toString(), 40, true);
+        RegisterNewBiomeTemperature(Biomes.RIVER.getLocation().toString(), 40, false);
+        RegisterNewBiomeTemperature(Biomes.NETHER_WASTES.getLocation().toString(), 80, true);
+        RegisterNewBiomeTemperature(Biomes.THE_END.getLocation().toString(), 55, false);
+        RegisterNewBiomeTemperature(Biomes.FROZEN_OCEAN.getLocation().toString(), 30, false);
+        RegisterNewBiomeTemperature(Biomes.FROZEN_RIVER.getLocation().toString(), 30, false);
+        RegisterNewBiomeTemperature(Biomes.SNOWY_TUNDRA.getLocation().toString(), 30, false);
+        RegisterNewBiomeTemperature(Biomes.SNOWY_MOUNTAINS.getLocation().toString(), 25, false);
+        RegisterNewBiomeTemperature(Biomes.MUSHROOM_FIELDS.getLocation().toString(), 40, true);
+        RegisterNewBiomeTemperature(Biomes.MUSHROOM_FIELD_SHORE.getLocation().toString(), 55, false);
     }
 }
