@@ -45,63 +45,44 @@ public class ItemInit {
 
     /*----------------------Drinks/Juices----------------------*/
     public static final RegistryObject<Item> Purified_Water = ITEMS.register("purified_water", () ->
-            new PurifiedWater(new Item.Properties().
+            new JuiceItem(1.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
-                    maxStackSize(1).
-                    containerItem(Items.GLASS_BOTTLE)
+                    maxStackSize(1)
             ));
     public static final RegistryObject<Item> Apple_Juice = ITEMS.register("apple_juice", () ->
-            new AppleJuice(new Item.Properties().
+            new JuiceItem(3.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
-                    maxStackSize(1).
-                    containerItem(Items.GLASS_BOTTLE)
+                    maxStackSize(1)
             ));
     public static final RegistryObject<Item> Beetroot_Juice = ITEMS.register("beetroot_juice", () ->
-            new BeetrootJuice(new Item.Properties().
+            new JuiceItem(2.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
-                    maxStackSize(1).
-                    containerItem(Items.GLASS_BOTTLE)
+                    maxStackSize(1)
             ));
     public static final RegistryObject<Item> Carrot_Juice = ITEMS.register("carrot_juice", () ->
-            new CarrotJuice(new Item.Properties().
+            new JuiceItem(3f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
-                    maxStackSize(1).
-                    containerItem(Items.GLASS_BOTTLE)
+                    maxStackSize(1)
             ));
     public static final RegistryObject<Item> Chorus_Fruit_Juice = ITEMS.register("chorusfruit_juice", () ->
-            new ChorusFruitJuice(new Item.Properties().
-                    group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
-                    maxStackSize(1).
-                    containerItem(Items.GLASS_BOTTLE)
-            ));
+            JuiceItem.createChorusFruitJuice());
     public static final RegistryObject<Item> God_Apple_Juice = ITEMS.register("enchantedgoldenapple_juice", () ->
-            new GOD_GOLDEN_AppleJuice(new Item.Properties().
-                    group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
-                    maxStackSize(1).
-                    containerItem(Items.GLASS_BOTTLE)
-            ));
+            JuiceItem.createGodGoldenAppleJuice());
     public static final RegistryObject<Item> Golden_Apple_Juice = ITEMS.register("goldenapple_juice", () ->
-            new GOLDEN_AppleJuice(new Item.Properties().
-                    group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
-                    maxStackSize(1).
-                    containerItem(Items.GLASS_BOTTLE)
-            ));
+            JuiceItem.createGoldenAppleJuice());
     public static final RegistryObject<Item> Golden_Carrot_Juice = ITEMS.register("goldencarrot_juice", () ->
-            new GOLDEN_CarrotJuice(new Item.Properties().
+            new JuiceItem(4.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
-                    maxStackSize(1).
-                    containerItem(Items.GLASS_BOTTLE)
+                    maxStackSize(1)
             ));
     public static final RegistryObject<Item> Melon_Juice = ITEMS.register("melon_juice", () ->
-            new MelonJuice(new Item.Properties().
+            new JuiceItem(2.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
-                    maxStackSize(1).
-                    containerItem(Items.GLASS_BOTTLE)
+                    maxStackSize(1)
             ));
     public static final RegistryObject<Item> SweetBerry_Juice = ITEMS.register("sweetberry_juice", () ->
-            new SweetBerryJuice(new Item.Properties().
+            new JuiceItem(2.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
-                    maxStackSize(1).
-                    containerItem(Items.GLASS_BOTTLE)
+                    maxStackSize(1)
             ));
 }
