@@ -16,6 +16,7 @@ DD/MM/YYYY
 //CHANGELOGS
 
 08/04/2021
+- added JuiceItem class
 - added temperature registries for biomes 6 to 15 (numerical id)
 
 07/04/2021
