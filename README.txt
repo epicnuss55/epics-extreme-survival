@@ -16,6 +16,7 @@ DD/MM/YYYY
 //CHANGELOGS
 
 08/04/2021
+- added back accidentally deleted bamboo filterer item
 - removed all unnecessary juice classes
 - converted all drinkables in ItemInit to a JuiceItem
 - added JuiceItem class
