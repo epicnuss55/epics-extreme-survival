@@ -19,6 +19,7 @@ DD/MM/YYYY
 - removed god apple, enchanted god apple and chorus fruit juice class & swapped it with advanced juice class
 - added advanced juice abstract class (for custom juices with custom effects)
 - changed the juice items in ItemInit accordingly
+- added temperature registries for biome 16 to 20 (numerical id)
 
 08/04/2021
 - added back accidentally deleted bamboo filterer item

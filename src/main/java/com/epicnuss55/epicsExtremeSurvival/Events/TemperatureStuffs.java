@@ -84,5 +84,10 @@ public class TemperatureStuffs {
         RegisterNewBiomeTemperature(Biomes.SNOWY_MOUNTAINS.getLocation().toString(), 25, false);
         RegisterNewBiomeTemperature(Biomes.MUSHROOM_FIELDS.getLocation().toString(), 40, true);
         RegisterNewBiomeTemperature(Biomes.MUSHROOM_FIELD_SHORE.getLocation().toString(), 55, false);
+        RegisterNewBiomeTemperature(Biomes.BEACH.getLocation().toString(), 40, true);
+        RegisterNewBiomeTemperature(Biomes.DESERT_HILLS.getLocation().toString(), 60, true);
+        RegisterNewBiomeTemperature(Biomes.WOODED_HILLS.getLocation().toString(), 45, true);
+        RegisterNewBiomeTemperature(Biomes.TAIGA_HILLS.getLocation().toString(), 40, false);
+        RegisterNewBiomeTemperature(Biomes.MOUNTAIN_EDGE.getLocation().toString(), 40, false);
     }
 }
