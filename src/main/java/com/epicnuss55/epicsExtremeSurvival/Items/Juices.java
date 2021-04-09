@@ -17,83 +17,78 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class JuiceItem extends Item {
+public class Juices {
 
-    private float thirst;
+    public static class JuiceItem extends Item {
+        private float thirst;
 
-    public JuiceItem(float AddThirst, Properties properties) {
-        super(properties);
-        this.thirst = AddThirst;
-    }
-
-    @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-        if (entityLiving instanceof ServerPlayerEntity) {
-            ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entityLiving;
-            CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
+        public JuiceItem(float AddThirst, Properties properties) {
+            super(properties);
+            this.thirst = AddThirst;
         }
 
-        if (entityLiving instanceof PlayerEntity && !((PlayerEntity)entityLiving).abilities.isCreativeMode) {
-            stack.shrink(1);
+        @Override
+        public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+            if (entityLiving instanceof ServerPlayerEntity) {
+                ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) entityLiving;
+                CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
+            }
+
+            if (entityLiving instanceof PlayerEntity && !((PlayerEntity) entityLiving).abilities.isCreativeMode) {
+                stack.shrink(1);
+            }
+            ThirstStuffs.AddThirst(thirst);
+
+            return stack.isEmpty() ? new ItemStack(Items.GLASS_BOTTLE) : stack;
         }
-        ThirstStuffs.AddThirst(thirst);
 
-        return stack.isEmpty() ? new ItemStack(Items.GLASS_BOTTLE) : stack;
-    }
+        @Override
+        public UseAction getUseAction(ItemStack stack) {
+            return UseAction.DRINK;
+        }
 
-    @Override
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.DRINK;
-    }
+        @Override
+        public int getUseDuration(ItemStack stack) {
+            return 32;
+        }
 
-    @Override
-    public int getUseDuration(ItemStack stack) {
-        return 32;
-    }
-
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        return DrinkHelper.startDrinking(worldIn, playerIn, handIn);
+        @Override
+        public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+            return DrinkHelper.startDrinking(worldIn, playerIn, handIn);
+        }
     }
 
 
     public static ChorusFruitJuice createChorusFruitJuice() {
-        return new ChorusFruitJuice(new Item.Properties().
+        return new ChorusFruitJuice(3.5f, new Item.Properties().
             group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
             maxStackSize(1)
         );
     }
 
     public static GodGoldenAppleJuice createGodGoldenAppleJuice() {
-        return new GodGoldenAppleJuice(new Item.Properties().
+        return new GodGoldenAppleJuice(3.5f, new Item.Properties().
                 group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
                 maxStackSize(1)
         );
     }
 
     public static GoldenAppleJuice createGoldenAppleJuice() {
-        return new GoldenAppleJuice(new Item.Properties().
+        return new GoldenAppleJuice(3.5f, new Item.Properties().
                 group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
                 maxStackSize(1)
         );
     }
 
 
-    private static class ChorusFruitJuice extends Item {
-        public ChorusFruitJuice(Properties properties) {
-            super(properties);
+    private static class ChorusFruitJuice extends AdvancedJuice {
+
+        public ChorusFruitJuice(float AddThirst, Properties properties) {
+            super(AddThirst, properties);
         }
 
         @Override
-        public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-            if (entityLiving instanceof ServerPlayerEntity) {
-                ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entityLiving;
-                CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
-            }
-
-            if (entityLiving instanceof PlayerEntity && !((PlayerEntity)entityLiving).abilities.isCreativeMode) {
-                stack.shrink(1);
-            }
+        public void Action(ItemStack stack, World worldIn, LivingEntity entityLiving) {
             if (!worldIn.isRemote) {
                 double d0 = entityLiving.getPosX();
                 double d1 = entityLiving.getPosY();
@@ -119,81 +114,50 @@ public class JuiceItem extends Item {
                     ((PlayerEntity)entityLiving).getCooldownTracker().setCooldown(this, 20);
                 }
             }
-            ThirstStuffs.AddThirst(3.5f);
-
-            return stack.isEmpty() ? new ItemStack(Items.GLASS_BOTTLE) : stack;
-        }
-
-        @Override
-        public UseAction getUseAction(ItemStack stack) {
-            return UseAction.DRINK;
-        }
-
-        @Override
-        public int getUseDuration(ItemStack stack) {
-            return 32;
-        }
-
-        @Override
-        public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-            return DrinkHelper.startDrinking(worldIn, playerIn, handIn);
         }
     }
 
-    private static class GodGoldenAppleJuice extends Item {
-        public GodGoldenAppleJuice(Properties properties) {
-            super(properties);
+
+    private static class GodGoldenAppleJuice extends AdvancedJuice {
+
+        public GodGoldenAppleJuice(float AddThirst, Properties properties) {
+            super(AddThirst, properties);
         }
 
         @Override
-        public boolean hasEffect(ItemStack stack) {
-            return true;
-        }
-
-        @Override
-        public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+        public void Action(ItemStack stack, World worldIn, LivingEntity entityLiving) {
             entityLiving.addPotionEffect(new EffectInstance(Effects.REGENERATION, 400, 1));
             entityLiving.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 6000, 0));
             entityLiving.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 6000, 0));
             entityLiving.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 2400, 3));
-            if (entityLiving instanceof ServerPlayerEntity) {
-                ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entityLiving;
-                CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
-            }
-
-            if (entityLiving instanceof PlayerEntity && !((PlayerEntity)entityLiving).abilities.isCreativeMode) {
-                stack.shrink(1);
-            }
-            ThirstStuffs.AddThirst(3.5f);
-
-            return stack.isEmpty() ? new ItemStack(Items.GLASS_BOTTLE) : stack;
-        }
-
-        @Override
-        public UseAction getUseAction(ItemStack stack) {
-            return UseAction.DRINK;
-        }
-
-        @Override
-        public int getUseDuration(ItemStack stack) {
-            return 32;
-        }
-
-        @Override
-        public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-            return DrinkHelper.startDrinking(worldIn, playerIn, handIn);
         }
     }
 
-    private static class GoldenAppleJuice extends Item {
-        public GoldenAppleJuice(Properties properties) {
-            super(properties);
+    private static class GoldenAppleJuice extends AdvancedJuice {
+        public GoldenAppleJuice(float AddThirst, Properties properties) {
+            super(AddThirst, properties);
         }
 
         @Override
-        public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+        public void Action(ItemStack stack, World worldIn, LivingEntity entityLiving) {
             entityLiving.addPotionEffect(new EffectInstance(Effects.REGENERATION, 100, 1));
             entityLiving.addPotionEffect(new EffectInstance(Effects.ABSORPTION, 2400, 0));
+        }
+    }
+
+    public static abstract class AdvancedJuice extends Item {
+
+        private float thirst;
+
+        public AdvancedJuice(float AddThirst, Properties properties) {
+            super(properties);
+            this.thirst = AddThirst;
+        }
+
+        public abstract void Action(ItemStack stack, World worldIn, LivingEntity entityLiving);
+
+        @Override
+        public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
             if (entityLiving instanceof ServerPlayerEntity) {
                 ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)entityLiving;
                 CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
@@ -202,7 +166,8 @@ public class JuiceItem extends Item {
             if (entityLiving instanceof PlayerEntity && !((PlayerEntity)entityLiving).abilities.isCreativeMode) {
                 stack.shrink(1);
             }
-            ThirstStuffs.AddThirst(3.5f);
+            Action(stack, worldIn, entityLiving);
+            ThirstStuffs.AddThirst(thirst);
 
             return stack.isEmpty() ? new ItemStack(Items.GLASS_BOTTLE) : stack;
         }

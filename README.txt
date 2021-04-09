@@ -15,6 +15,10 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+09/04/2021
+- removed god apple, enchanted god apple and chorus fruit juice class
+- added advanced juice abstract class (for custom juices with custom effects)
+
 08/04/2021
 - added back accidentally deleted bamboo filterer item
 - removed all unnecessary juice classes
