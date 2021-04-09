@@ -10,7 +10,6 @@ import net.minecraftforge.fml.RegistryObject;
 public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EpicsExtremeSurvival.MODID);
 
-    /*-------------------------------------------ITEMS-------------------------------------------*/
     /*----------------------test item----------------------*/
     public static final RegistryObject<Item> test_item = ITEMS.register("test_item", () ->
             new Item(new Item.Properties().
@@ -45,43 +44,43 @@ public class ItemInit {
 
     /*----------------------Drinks/Juices----------------------*/
     public static final RegistryObject<Item> Purified_Water = ITEMS.register("purified_water", () ->
-            new JuiceItem(1.5f, new Item.Properties().
+            new Juices.JuiceItem(1.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
                     maxStackSize(1)
             ));
     public static final RegistryObject<Item> Apple_Juice = ITEMS.register("apple_juice", () ->
-            new JuiceItem(3.5f, new Item.Properties().
+            new Juices.JuiceItem(3.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
                     maxStackSize(1)
             ));
     public static final RegistryObject<Item> Beetroot_Juice = ITEMS.register("beetroot_juice", () ->
-            new JuiceItem(2.5f, new Item.Properties().
+            new Juices.JuiceItem(2.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
                     maxStackSize(1)
             ));
     public static final RegistryObject<Item> Carrot_Juice = ITEMS.register("carrot_juice", () ->
-            new JuiceItem(3f, new Item.Properties().
+            new Juices.JuiceItem(3f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
                     maxStackSize(1)
             ));
     public static final RegistryObject<Item> Chorus_Fruit_Juice = ITEMS.register("chorusfruit_juice", () ->
-            JuiceItem.createChorusFruitJuice());
+            Juices.createChorusFruitJuice());
     public static final RegistryObject<Item> God_Apple_Juice = ITEMS.register("enchantedgoldenapple_juice", () ->
-            JuiceItem.createGodGoldenAppleJuice());
+            Juices.createGodGoldenAppleJuice());
     public static final RegistryObject<Item> Golden_Apple_Juice = ITEMS.register("goldenapple_juice", () ->
-            JuiceItem.createGoldenAppleJuice());
+            Juices.createGoldenAppleJuice());
     public static final RegistryObject<Item> Golden_Carrot_Juice = ITEMS.register("goldencarrot_juice", () ->
-            new JuiceItem(4.5f, new Item.Properties().
+            new Juices.JuiceItem(4.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
                     maxStackSize(1)
             ));
     public static final RegistryObject<Item> Melon_Juice = ITEMS.register("melon_juice", () ->
-            new JuiceItem(2.5f, new Item.Properties().
+            new Juices.JuiceItem(2.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
                     maxStackSize(1)
             ));
     public static final RegistryObject<Item> SweetBerry_Juice = ITEMS.register("sweetberry_juice", () ->
-            new JuiceItem(2.5f, new Item.Properties().
+            new Juices.JuiceItem(2.5f, new Item.Properties().
                     group(EpicsExtremeSurvival.SurvivalItemGroup.INSTANCE).
                     maxStackSize(1)
             ));
