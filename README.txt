@@ -15,6 +15,10 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+13/04/2021
+- removed isIncreasing scale and refactored all current temperatures for current biomes
+- added temperature registries for biome 21 to 158 (numerical id)
+
 09/04/2021
 - removed god apple, enchanted god apple and chorus fruit juice class & swapped it with advanced juice class
 - added advanced juice abstract class (for custom juices with custom effects)
