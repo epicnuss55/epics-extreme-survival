@@ -126,6 +126,19 @@ public class TemperatureStuffs {
         RegisterNewBiomeTemperature(Biomes.TALL_BIRCH_HILLS.getLocation().toString(), 50);
         RegisterNewBiomeTemperature(Biomes.DARK_FOREST_HILLS.getLocation().toString(), 50);
         RegisterNewBiomeTemperature(Biomes.SNOWY_TAIGA_MOUNTAINS.getLocation().toString(), 20);
-
+        RegisterNewBiomeTemperature(Biomes.GIANT_SPRUCE_TAIGA.getLocation().toString(), 45);
+        RegisterNewBiomeTemperature(Biomes.GIANT_SPRUCE_TAIGA_HILLS.getLocation().toString(), 45);
+        RegisterNewBiomeTemperature(Biomes.MODIFIED_GRAVELLY_MOUNTAINS.getLocation().toString(), 50);
+        RegisterNewBiomeTemperature(Biomes.SHATTERED_SAVANNA.getLocation().toString(), 65);
+        RegisterNewBiomeTemperature(Biomes.SHATTERED_SAVANNA_PLATEAU.getLocation().toString(), 65);
+        RegisterNewBiomeTemperature(Biomes.ERODED_BADLANDS.getLocation().toString(), 80);
+        RegisterNewBiomeTemperature(Biomes.MODIFIED_WOODED_BADLANDS_PLATEAU.getLocation().toString(), 75);
+        RegisterNewBiomeTemperature(Biomes.MODIFIED_BADLANDS_PLATEAU.getLocation().toString(), 80);
+        RegisterNewBiomeTemperature(Biomes.BAMBOO_JUNGLE.getLocation().toString(), 70);
+        RegisterNewBiomeTemperature(Biomes.BAMBOO_JUNGLE_HILLS.getLocation().toString(), 70);
+        RegisterNewBiomeTemperature(Biomes.SOUL_SAND_VALLEY.getLocation().toString(), 85);
+        RegisterNewBiomeTemperature(Biomes.CRIMSON_FOREST.getLocation().toString(), 85);
+        RegisterNewBiomeTemperature(Biomes.WARPED_FOREST.getLocation().toString(), 85);
+        RegisterNewBiomeTemperature(Biomes.BASALT_DELTAS.getLocation().toString(), 90);
     }
 }

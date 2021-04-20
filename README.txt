@@ -15,6 +15,10 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+20/04/2021
+- Finished biome temperature registries
+- added temperature registries for biome 160 to 173 (numerical id)
+
 13/04/2021
 - removed isIncreasing scale and refactored all current temperatures for current biomes
 - added temperature registries for biome 21 to 158 (numerical id)
