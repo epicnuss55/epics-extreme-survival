@@ -170,28 +170,6 @@ public class ThirstStuffs {
                 animating = 0;
             }
         }
-
-/*
-        if (animating > 5)
-            animating = 0;
-
-        if (animating == 0)
-            animTick++;
-
-        if (((thirstValue >= 0 && thirstValue <= 2.5) && (animTick > 20)) || (animating != 0)) {
-            animate = true;
-            animTick = 0;
-            animating++;
-        } else if ((thirstValue >= 3 && thirstValue <= 6.5) && (animTick > 120) && (animTick == 0)){
-            animate = true;
-            animTick = 0;
-            animating++;
-        } else if (animTick > 240) {
-            animate = true;
-            animTick = 0;
-            animating++;
-        }
- */
     }
 
     //render simplifier lol
