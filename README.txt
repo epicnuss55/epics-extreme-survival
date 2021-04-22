@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+22/04/2021
+- Added a cheecky missing biome (GIANT_TREE_TAIGA_HILLS)
+
 20/04/2021
 - Finished biome temperature registries
 - added temperature registries for biome 160 to 173 (numerical id)

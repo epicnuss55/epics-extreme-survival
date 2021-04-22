@@ -1,33 +1,10 @@
 package com.epicnuss55.epicsExtremeSurvival.Events;
 
-import com.electronwill.nightconfig.core.AbstractConfig;
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.datafix.fixes.BiomeName;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeRegistry;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHealEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -37,7 +14,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = EpicsExtremeSurvival.MODID)
 public class TemperatureStuffs {
 
-    public static List<BiomeTemp> BIOME_TEMPS = new ArrayList<BiomeTemp>();
+    public static List<BiomeTemp> BIOME_TEMPS = new ArrayList<>();
 
     public static void RegisterNewBiomeTemperature(String BiomeRegisteredName, int Temperature) {
         BiomeTemp newInitBiome = new BiomeTemp(BiomeRegisteredName, Temperature);
@@ -47,6 +24,7 @@ public class TemperatureStuffs {
     public static class BiomeTemp {
         private int temperature;
         private String biome;
+
         public BiomeTemp(String BiomeRegisteredName, int temperature) {
             this.temperature = temperature;
             this.biome = BiomeRegisteredName;
@@ -61,7 +39,7 @@ public class TemperatureStuffs {
         }
     }
 
-    public static void RegisterVanillaBiomesTemperatures() {
+    static {
         RegisterNewBiomeTemperature(Biomes.OCEAN.getLocation().toString(), 35);
         RegisterNewBiomeTemperature(Biomes.PLAINS.getLocation().toString(), 55);
         RegisterNewBiomeTemperature(Biomes.DESERT.getLocation().toString(), 75);
@@ -95,6 +73,7 @@ public class TemperatureStuffs {
         RegisterNewBiomeTemperature(Biomes.SNOWY_TAIGA.getLocation().toString(), 20);
         RegisterNewBiomeTemperature(Biomes.SNOWY_TAIGA_HILLS.getLocation().toString(), 20);
         RegisterNewBiomeTemperature(Biomes.GIANT_TREE_TAIGA.getLocation().toString(), 45);
+        RegisterNewBiomeTemperature(Biomes.GIANT_TREE_TAIGA_HILLS.getLocation().toString(), 45);
         RegisterNewBiomeTemperature(Biomes.GIANT_SPRUCE_TAIGA_HILLS.getLocation().toString(), 45);
         RegisterNewBiomeTemperature(Biomes.WOODED_MOUNTAINS.getLocation().toString(), 40);
         RegisterNewBiomeTemperature(Biomes.SAVANNA.getLocation().toString(), 65);
