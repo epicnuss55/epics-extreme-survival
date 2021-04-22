@@ -1,5 +1,6 @@
 package com.epicnuss55.epicsExtremeSurvival;
 
+import com.epicnuss55.epicsExtremeSurvival.Events.TemperatureStuffs;
 import com.epicnuss55.epicsExtremeSurvival.Init.BlockInit;
 import com.epicnuss55.epicsExtremeSurvival.Init.PlayerStatsSaver;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -32,6 +33,7 @@ public class EpicsExtremeSurvival {
         instance = this;
         MinecraftForge.EVENT_BUS.register(new ThirstStuffs());
         MinecraftForge.EVENT_BUS.register(new PlayerStatsSaver());
+        MinecraftForge.EVENT_BUS.register(new TemperatureStuffs());
         MinecraftForge.EVENT_BUS.register(this);
     }
 

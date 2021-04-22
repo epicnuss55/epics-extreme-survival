@@ -16,6 +16,7 @@ DD/MM/YYYY
 //CHANGELOGS
 
 22/04/2021
+- Added basic biome checker logic
 - Added a cheecky missing biome (GIANT_TREE_TAIGA_HILLS)
 
 20/04/2021

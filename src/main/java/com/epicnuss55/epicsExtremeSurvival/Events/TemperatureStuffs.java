@@ -120,4 +120,35 @@ public class TemperatureStuffs {
         RegisterNewBiomeTemperature(Biomes.WARPED_FOREST.getLocation().toString(), 85);
         RegisterNewBiomeTemperature(Biomes.BASALT_DELTAS.getLocation().toString(), 90);
     }
+
+
+    private static final int TEMPERATURE_CHANGE_DELAY_VALUE = 40;
+    private static int current_Val = 0;
+    private static BiomeTemp currentBiome = BIOME_TEMPS.get(0);
+
+    @SubscribeEvent
+    public void TemperatureEvent(LivingEvent.LivingUpdateEvent event) {
+        if (event.getEntityLiving() instanceof PlayerEntity && !(((PlayerEntity) event.getEntityLiving()).isCreative()) && !(((PlayerEntity) event.getEntityLiving()).isSpectator())) {
+            if (current_Val >= 40) {
+                current_Val = 0;
+
+                World world = event.getEntityLiving().getEntityWorld();
+                String BIOME = world.getBiome(event.getEntityLiving().getPosition()).getRegistryName().toString();
+                EpicsExtremeSurvival.LOGGER.info("Currently in Biome " + BIOME);
+                if (currentBiome.getBiomeRegisteredName().equals(BIOME)) {
+                    EpicsExtremeSurvival.LOGGER.info("Biome registry name is " + currentBiome.getBiomeRegisteredName());
+                } else {
+                    EpicsExtremeSurvival.LOGGER.info("grabbing new Biome Temp");
+                    for (BiomeTemp biome : BIOME_TEMPS) {
+                        EpicsExtremeSurvival.LOGGER.info("checking " + biome.getBiomeRegisteredName());
+                        if (BIOME.equals(biome.getBiomeRegisteredName())) {
+                            EpicsExtremeSurvival.LOGGER.info("Found new Biome " + biome.getBiomeRegisteredName());
+                            currentBiome = biome;
+                            break;
+                        }
+                    }
+                }
+            } else current_Val++;
+        }
+    }
 }
