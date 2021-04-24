@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+24/04/2021
+- Temperature rise and fall logic
+
 22/04/2021
 - Added basic biome checker logic
 - Added a cheecky missing biome (GIANT_TREE_TAIGA_HILLS)

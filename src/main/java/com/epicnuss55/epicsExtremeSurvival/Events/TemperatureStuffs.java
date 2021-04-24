@@ -2,6 +2,7 @@ package com.epicnuss55.epicsExtremeSurvival.Events;
 
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -125,6 +126,7 @@ public class TemperatureStuffs {
     private static final int TEMPERATURE_CHANGE_DELAY_VALUE = 40;
     private static int current_Val = 0;
     private static BiomeTemp currentBiome = BIOME_TEMPS.get(0);
+    private static int PlayerTemperature = 50;
 
     @SubscribeEvent
     public void TemperatureEvent(LivingEvent.LivingUpdateEvent event) {
@@ -136,7 +138,13 @@ public class TemperatureStuffs {
                 String BIOME = world.getBiome(event.getEntityLiving().getPosition()).getRegistryName().toString();
                 EpicsExtremeSurvival.LOGGER.info("Currently in Biome " + BIOME);
                 if (currentBiome.getBiomeRegisteredName().equals(BIOME)) {
-                    EpicsExtremeSurvival.LOGGER.info("Biome registry name is " + currentBiome.getBiomeRegisteredName());
+                    if (PlayerTemperature > currentBiome.temperature) {
+                        PlayerTemperature--;
+                    } else if (PlayerTemperature < currentBiome.temperature) {
+                        PlayerTemperature++;
+                    }
+                    EpicsExtremeSurvival.LOGGER.info(PlayerTemperature);
+
                 } else {
                     EpicsExtremeSurvival.LOGGER.info("grabbing new Biome Temp");
                     for (BiomeTemp biome : BIOME_TEMPS) {
