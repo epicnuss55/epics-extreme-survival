@@ -145,6 +145,15 @@ public class TemperatureStuffs {
                     }
                     EpicsExtremeSurvival.LOGGER.info(PlayerTemperature);
 
+                    if (PlayerTemperature <= 35) {
+                        if (PlayerTemperature <= 25) {
+                            if (PlayerTemperature <= 20) {
+                                if (PlayerTemperature <= 15) {
+                                    event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 2f);
+                                } else event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 1.5f);
+                            } else event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 1f);
+                        } else event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 0.5f);
+                    }
                 } else {
                     EpicsExtremeSurvival.LOGGER.info("grabbing new Biome Temp");
                     for (BiomeTemp biome : BIOME_TEMPS) {
