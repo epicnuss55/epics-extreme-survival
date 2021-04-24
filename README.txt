@@ -16,6 +16,7 @@ DD/MM/YYYY
 //CHANGELOGS
 
 24/04/2021
+- heat damage
 - cold damage
 - Temperature rise and fall logic
 

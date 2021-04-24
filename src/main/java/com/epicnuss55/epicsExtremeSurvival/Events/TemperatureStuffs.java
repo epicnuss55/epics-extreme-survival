@@ -153,6 +153,14 @@ public class TemperatureStuffs {
                                 } else event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 1.5f);
                             } else event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 1f);
                         } else event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 0.5f);
+                    } else if (PlayerTemperature >= 65) {
+                        if (PlayerTemperature >= 75) {
+                            if (PlayerTemperature >= 80) {
+                                if (PlayerTemperature >= 85) {
+                                    event.getEntityLiving().attackEntityFrom(DamageSource.ON_FIRE, 2f);
+                                } else event.getEntityLiving().attackEntityFrom(DamageSource.ON_FIRE, 1.5f);
+                            } else event.getEntityLiving().attackEntityFrom(DamageSource.ON_FIRE, 1f);
+                        } else event.getEntityLiving().attackEntityFrom(DamageSource.ON_FIRE, 0.5f);
                     }
                 } else {
                     EpicsExtremeSurvival.LOGGER.info("grabbing new Biome Temp");
