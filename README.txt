@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+29/04/2021
+- added burning and freezing overlays
+
 24/04/2021
 - heat damage
 - cold damage
