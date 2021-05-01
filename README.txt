@@ -16,6 +16,7 @@ DD/MM/YYYY
 //CHANGELOGS
 
 1/05/2021
+- created the render logic for temperature overlays
 - added blur for freezing and burning overlays
 
 29/04/2021

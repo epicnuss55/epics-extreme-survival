@@ -1,13 +1,21 @@
 package com.epicnuss55.epicsExtremeSurvival.Events;
 
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.world.NoteBlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,12 +134,12 @@ public class TemperatureStuffs {
     private static final int TEMPERATURE_CHANGE_DELAY_VALUE = 40;
     private static int current_Val = 0;
     private static BiomeTemp currentBiome = BIOME_TEMPS.get(0);
-    private static int PlayerTemperature = 50;
+    private static int PlayerTemperature = 20;
 
     @SubscribeEvent
     public void TemperatureEvent(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity && !(((PlayerEntity) event.getEntityLiving()).isCreative()) && !(((PlayerEntity) event.getEntityLiving()).isSpectator())) {
-            if (current_Val >= 40) {
+            if (current_Val >= TEMPERATURE_CHANGE_DELAY_VALUE) {
                 current_Val = 0;
 
                 World world = event.getEntityLiving().getEntityWorld();
@@ -174,6 +182,34 @@ public class TemperatureStuffs {
                     }
                 }
             } else current_Val++;
+        }
+    }
+
+    @SubscribeEvent
+    public static void OverlayEvent(RenderGameOverlayEvent.Pre event) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE) {
+            if (PlayerTemperature >= 60) {
+                RenderSystem.pushMatrix();
+                RenderSystem.pushTextureAttributes();
+                RenderSystem.enableAlphaTest();
+                RenderSystem.enableBlend();
+                RenderSystem.color4f(1F,1F,1F, (PlayerTemperature-60)/100f);
+                Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(EpicsExtremeSurvival.MODID, "textures/gui/hotgradient.png"));
+                Minecraft.getInstance().ingameGUI.blit(event.getMatrixStack(), 0, 0, Minecraft.getInstance().getMainWindow().getScaledWidth(), Minecraft.getInstance().getMainWindow().getScaledHeight(), 0, 0, 256, 256, 256, 256);
+                RenderSystem.popAttributes();
+                RenderSystem.popMatrix();
+            } else if (PlayerTemperature <= 40) {
+                RenderSystem.pushMatrix();
+                RenderSystem.pushTextureAttributes();
+                RenderSystem.enableAlphaTest();
+                RenderSystem.enableBlend();
+                RenderSystem.color4f(1F,1F,1F, (40-PlayerTemperature)/100f);
+                Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(EpicsExtremeSurvival.MODID, "textures/gui/coldgradient.png"));
+                Minecraft.getInstance().ingameGUI.blit(event.getMatrixStack(), 0, 0, Minecraft.getInstance().getMainWindow().getScaledWidth(), Minecraft.getInstance().getMainWindow().getScaledHeight(), 0, 0, 256, 256, 256, 256);
+                RenderSystem.popAttributes();
+                RenderSystem.popMatrix();
+            }
+            Minecraft.getInstance().getTextureManager().bindTexture(AbstractGui.GUI_ICONS_LOCATION);
         }
     }
 }
