@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+1/05/2021
+- added blur for freezing and burning overlays
+
 29/04/2021
 - added burning and freezing overlays
 
