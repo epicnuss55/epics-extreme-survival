@@ -131,7 +131,7 @@ public class TemperatureStuffs {
     }
 
 
-    private static final int TEMPERATURE_CHANGE_DELAY_VALUE = 40;
+    private static final int TEMPERATURE_CHANGE_DELAY_VALUE = 80;
     private static int current_Val = 0;
     private static BiomeTemp currentBiome = BIOME_TEMPS.get(0);
     private static int PlayerTemperature = 20;

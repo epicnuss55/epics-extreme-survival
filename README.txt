@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+05/05/2021
+- changed delay for body temperature change
+
 1/05/2021
 - created the render logic for temperature overlays
 - added blur for freezing and burning overlays
