@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+07/05/2021
+- changed hot and cold gradient
+
 05/05/2021
 - changed delay for body temperature change
 
