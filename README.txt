@@ -16,6 +16,7 @@ DD/MM/YYYY
 //CHANGELOGS
 
 11/05/2021
+- finalized temperature overlay
 - finalized temperature overlay's opacity slope
 
 07/05/2021
