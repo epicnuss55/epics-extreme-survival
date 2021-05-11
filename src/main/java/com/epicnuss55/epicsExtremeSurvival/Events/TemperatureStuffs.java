@@ -193,8 +193,7 @@ public class TemperatureStuffs {
                 RenderSystem.pushTextureAttributes();
                 RenderSystem.enableAlphaTest();
                 RenderSystem.enableBlend();
-                //deeta
-                RenderSystem.color4f(1F,1F,1F, (PlayerTemperature+40)/100f);
+                RenderSystem.color4f(1F,1F,1F, ((PlayerTemperature-40)*2.5f)/102f);
                 Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(EpicsExtremeSurvival.MODID, "textures/gui/hotgradient.png"));
                 Minecraft.getInstance().ingameGUI.blit(event.getMatrixStack(), 0, 0, Minecraft.getInstance().getMainWindow().getScaledWidth(), Minecraft.getInstance().getMainWindow().getScaledHeight(), 0, 0, 256, 256, 256, 256);
                 RenderSystem.popAttributes();
@@ -204,7 +203,7 @@ public class TemperatureStuffs {
                 RenderSystem.pushTextureAttributes();
                 RenderSystem.enableAlphaTest();
                 RenderSystem.enableBlend();
-                RenderSystem.color4f(1F,1F,1F, (PlayerTemperature+60)/100f);
+                RenderSystem.color4f(1F,1F,1F, ((40-PlayerTemperature)*2.5f)/102f);
                 Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(EpicsExtremeSurvival.MODID, "textures/gui/coldgradient.png"));
                 Minecraft.getInstance().ingameGUI.blit(event.getMatrixStack(), 0, 0, Minecraft.getInstance().getMainWindow().getScaledWidth(), Minecraft.getInstance().getMainWindow().getScaledHeight(), 0, 0, 256, 256, 256, 256);
                 RenderSystem.popAttributes();

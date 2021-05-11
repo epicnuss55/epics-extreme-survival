@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+11/05/2021
+- finalized temperature overlay's opacity slope
+
 07/05/2021
 - changed hot and cold gradient
 
