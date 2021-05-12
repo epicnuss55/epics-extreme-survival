@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+13/05/2021
+- added a temperature saving system
+
 11/05/2021
 - finalized temperature overlay
 - finalized temperature overlay's opacity slope

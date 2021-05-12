@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -134,7 +135,7 @@ public class TemperatureStuffs {
     private static final int TEMPERATURE_CHANGE_DELAY_VALUE = 80;
     private static int current_Val = 0;
     private static BiomeTemp currentBiome = BIOME_TEMPS.get(0);
-    private static int PlayerTemperature = 20;
+    private static int PlayerTemperature = 50;
 
     @SubscribeEvent
     public void TemperatureEvent(LivingEvent.LivingUpdateEvent event) {
@@ -144,14 +145,12 @@ public class TemperatureStuffs {
 
                 World world = event.getEntityLiving().getEntityWorld();
                 String BIOME = world.getBiome(event.getEntityLiving().getPosition()).getRegistryName().toString();
-                EpicsExtremeSurvival.LOGGER.info("Currently in Biome " + BIOME);
                 if (currentBiome.getBiomeRegisteredName().equals(BIOME)) {
                     if (PlayerTemperature > currentBiome.temperature) {
                         PlayerTemperature--;
                     } else if (PlayerTemperature < currentBiome.temperature) {
                         PlayerTemperature++;
                     }
-                    EpicsExtremeSurvival.LOGGER.info(PlayerTemperature);
 
                     if (PlayerTemperature <= 35) {
                         if (PlayerTemperature <= 25) {
@@ -171,11 +170,8 @@ public class TemperatureStuffs {
                         } else event.getEntityLiving().attackEntityFrom(DamageSource.ON_FIRE, 0.5f);
                     }
                 } else {
-                    EpicsExtremeSurvival.LOGGER.info("grabbing new Biome Temp");
                     for (BiomeTemp biome : BIOME_TEMPS) {
-                        EpicsExtremeSurvival.LOGGER.info("checking " + biome.getBiomeRegisteredName());
                         if (BIOME.equals(biome.getBiomeRegisteredName())) {
-                            EpicsExtremeSurvival.LOGGER.info("Found new Biome " + biome.getBiomeRegisteredName());
                             currentBiome = biome;
                             break;
                         }
@@ -193,7 +189,7 @@ public class TemperatureStuffs {
                 RenderSystem.pushTextureAttributes();
                 RenderSystem.enableAlphaTest();
                 RenderSystem.enableBlend();
-                RenderSystem.color4f(1F,1F,1F, ((PlayerTemperature-40)*2.5f)/102f);
+                RenderSystem.color4f(1F,1F,1F, ((PlayerTemperature-60)*2.5f)/102f);
                 Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(EpicsExtremeSurvival.MODID, "textures/gui/hotgradient.png"));
                 Minecraft.getInstance().ingameGUI.blit(event.getMatrixStack(), 0, 0, Minecraft.getInstance().getMainWindow().getScaledWidth(), Minecraft.getInstance().getMainWindow().getScaledHeight(), 0, 0, 256, 256, 256, 256);
                 RenderSystem.popAttributes();
@@ -211,5 +207,17 @@ public class TemperatureStuffs {
             }
             Minecraft.getInstance().getTextureManager().bindTexture(AbstractGui.GUI_ICONS_LOCATION);
         }
+    }
+    public static final String PLAYER_TEMP = "P_Temp";
+    public static final String CHANGE_VAL_CURRENT = "P_TEMP_CHANGE_VAL";
+
+    public static void read(CompoundNBT compound) {
+        PlayerTemperature = compound.getInt(PLAYER_TEMP);
+        current_Val = compound.getInt(CHANGE_VAL_CURRENT);
+    }
+
+    public static void write(CompoundNBT compound) {
+        compound.putInt(PLAYER_TEMP, PlayerTemperature);
+        compound.putInt(CHANGE_VAL_CURRENT, current_Val);
     }
 }

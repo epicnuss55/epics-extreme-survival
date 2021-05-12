@@ -1,6 +1,7 @@
 package com.epicnuss55.epicsExtremeSurvival.Init;
 
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
+import com.epicnuss55.epicsExtremeSurvival.Events.TemperatureStuffs;
 import com.epicnuss55.epicsExtremeSurvival.Events.ThirstStuffs;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
@@ -17,6 +18,7 @@ public class PlayerStatsSaver {
 
     //NBT tags
     public static final String ThirstNBT = "ThirstStats";
+    public static final String TemperatureNBT = "TemperatureStats";
 
     //*----------------SAVER LOGIC & EVENTS----------------*\\
 
@@ -28,6 +30,9 @@ public class PlayerStatsSaver {
 
             if(saver.EpicsExtremeNBT.contains(ThirstNBT))
                 ThirstStuffs.read(saver.EpicsExtremeNBT.getCompound(ThirstNBT));
+
+            if(saver.EpicsExtremeNBT.contains(TemperatureNBT))
+                TemperatureStuffs.read(saver.EpicsExtremeNBT.getCompound(TemperatureNBT));
         }
     }
 
@@ -38,9 +43,12 @@ public class PlayerStatsSaver {
             SavedDat saver = SavedDat.forWorld((ServerWorld) event.getWorld());
             CompoundNBT myData = new CompoundNBT();
             CompoundNBT thirstDat = new CompoundNBT();
+            CompoundNBT tempDat = new CompoundNBT();
+            myData.put(TemperatureNBT, tempDat);
             myData.put(ThirstNBT, thirstDat);
 
             ThirstStuffs.write(myData.getCompound(ThirstNBT));
+            TemperatureStuffs.write(myData.getCompound(TemperatureNBT));
 
             saver.EpicsExtremeNBT = myData;
             saver.markDirty();
