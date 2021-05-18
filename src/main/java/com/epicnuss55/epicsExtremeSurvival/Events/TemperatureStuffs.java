@@ -1,22 +1,20 @@
 package com.epicnuss55.epicsExtremeSurvival.Events;
 
 import com.epicnuss55.epicsExtremeSurvival.EpicsExtremeSurvival;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.world.NoteBlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,7 +149,6 @@ public class TemperatureStuffs {
                     } else if (PlayerTemperature < currentBiome.temperature) {
                         PlayerTemperature++;
                     }
-
                     if (PlayerTemperature <= 35) {
                         if (PlayerTemperature <= 25) {
                             if (PlayerTemperature <= 20) {
@@ -160,7 +157,8 @@ public class TemperatureStuffs {
                                 } else event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 1.5f);
                             } else event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 1f);
                         } else event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 0.5f);
-                    } else if (PlayerTemperature >= 65) {
+                    }
+                    if (PlayerTemperature >= 65 && !event.getEntityLiving().isPotionActive(Effects.FIRE_RESISTANCE)) {
                         if (PlayerTemperature >= 75) {
                             if (PlayerTemperature >= 80) {
                                 if (PlayerTemperature >= 85) {
@@ -183,7 +181,7 @@ public class TemperatureStuffs {
 
     @SubscribeEvent
     public static void OverlayEvent(RenderGameOverlayEvent.Pre event) {
-        if (event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE && !Minecraft.getInstance().player.isSpectator() && !Minecraft.getInstance().player.isCreative()) {
             if (PlayerTemperature >= 60) {
                 RenderSystem.pushMatrix();
                 RenderSystem.pushTextureAttributes();
