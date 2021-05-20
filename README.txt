@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+20/05/2021
+- added ability to drink from water source blocks
+
 18/05/2021
 - added the ability for fire resistance potions to negate heat damage
 
