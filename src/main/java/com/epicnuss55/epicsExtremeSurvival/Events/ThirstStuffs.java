@@ -327,14 +327,17 @@ public class ThirstStuffs {
     //Thirst save system
     public static final String THIRST_NBT = "thirstval";
     public static final String DEHYDRATION_NBT = "dehydrationval";
+    public static final String THIRST_EFFECT_NBT = "thirsteffectval";
 
     public static void read(CompoundNBT compound) {
         thirstValue = compound.getFloat(THIRST_NBT);
         Dehydration = compound.getFloat(DEHYDRATION_NBT);
+        Thirst_Effect = compound.getInt(THIRST_EFFECT_NBT);
     }
 
     public static void write(CompoundNBT compound) {
         compound.putFloat(THIRST_NBT, thirstValue);
         compound.putDouble(DEHYDRATION_NBT, Dehydration);
+        compound.putInt(THIRST_EFFECT_NBT, Thirst_Effect);
     }
 }

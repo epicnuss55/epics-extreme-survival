@@ -17,6 +17,7 @@ DD/MM/YYYY
 
 23/05/2021
 - added a thirst effect from drinking from water source blocks
+- added thirst effect saver
 
 20/05/2021
 - added ability to drink from water source blocks
