@@ -62,6 +62,8 @@ public class ThirstStuffs {
         return worldIn.rayTraceBlocks(new RayTraceContext(vector3d, vector3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
     }
 
+    private static int Thirst_Effect = 0;
+
     @SubscribeEvent
     public void RightClick(PlayerInteractEvent event) {
         RayTraceResult res = rayTrace(event.getWorld(), event.getPlayer(), RayTraceContext.FluidMode.SOURCE_ONLY);
@@ -70,6 +72,7 @@ public class ThirstStuffs {
             if (event.getWorld().getFluidState(blockpos).isTagged(FluidTags.WATER) && event.getWorld().isBlockModifiable(event.getPlayer(), blockpos)) {
                 event.getWorld().playSound(event.getPlayer(), event.getPlayer().getPosX(), event.getPlayer().getPosY(), event.getPlayer().getPosZ(), SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.NEUTRAL, 1.0F, 1.0F);
                 AddThirst(.5f);
+                Thirst_Effect = 600;
             }
         }
     }
@@ -86,6 +89,11 @@ public class ThirstStuffs {
 
             if (thirstValue < 3f)
                 dehydrationEvent((PlayerEntity) event.getEntityLiving());
+
+            if (Thirst_Effect > 0) {
+                Thirst_Effect--;
+                Dehydration = Dehydration + DEHYDRATED_DEBUFF;
+            }
 
             animate();
 
@@ -137,30 +145,56 @@ public class ThirstStuffs {
         if (Minecraft.getInstance().player.areEyesInFluid(FluidTags.WATER) || Minecraft.getInstance().player.getAir() < 300) {
             y = y-9;
         }
-
-        while (iterator != fullAmount) {
-            if (animate) {
-                if ((iterator % 2) == 0) {
-                    draw(stack, x - (iterator * 8), y + 1, 0, 0, 9, 9);
-                } else draw(stack, x - (iterator * 8), y - 1, 0, 0, 9, 9);
-            } else draw(stack, x - (iterator * 8), y, 0, 0, 9, 9);
-            iterator = iterator + 1;
-        }
-        if (drawHalf) {
-            if (animate) {
-                if ((iterator % 2) == 0) {
-                    draw(stack, x - (iterator * 8), y + 2, 20, 0, 9, 9);
-                } else draw(stack, x - (iterator * 8), y - 2, 20, 0, 9, 9);
-            } else draw(stack, x - (iterator * 8), y, 10, 0, 9, 9);
-            iterator = iterator + 1;
-        }
-        while (iterator != 10) {
-            if (animate) {
-                if ((iterator % 2) == 0) {
-                    draw(stack, x - (iterator * 8), y + 1, 30, 0, 9, 9);
-                } else draw(stack, x - (iterator * 8), y - 1, 30, 0, 9, 9);
-            } else draw(stack, x - (iterator * 8), y, 30, 0, 9, 9);
-            iterator = iterator + 1;
+        if (Thirst_Effect > 0) {
+            while (iterator != fullAmount) {
+                if (animate) {
+                    if ((iterator % 2) == 0) {
+                        draw(stack, x - (iterator * 8), y + 1, 0, 10, 9, 9);
+                    } else draw(stack, x - (iterator * 8), y - 1, 0, 10, 9, 9);
+                } else draw(stack, x - (iterator * 8), y, 0, 10, 9, 9);
+                iterator = iterator + 1;
+            }
+            if (drawHalf) {
+                if (animate) {
+                    if ((iterator % 2) == 0) {
+                        draw(stack, x - (iterator * 8), y + 2, 20, 10, 9, 9);
+                    } else draw(stack, x - (iterator * 8), y - 2, 20, 10, 9, 9);
+                } else draw(stack, x - (iterator * 8), y, 10, 10, 9, 9);
+                iterator = iterator + 1;
+            }
+            while (iterator != 10) {
+                if (animate) {
+                    if ((iterator % 2) == 0) {
+                        draw(stack, x - (iterator * 8), y + 1, 30, 10, 9, 9);
+                    } else draw(stack, x - (iterator * 8), y - 1, 30, 10, 9, 9);
+                } else draw(stack, x - (iterator * 8), y, 30, 10, 9, 9);
+                iterator = iterator + 1;
+            }
+        } else {
+            while (iterator != fullAmount) {
+                if (animate) {
+                    if ((iterator % 2) == 0) {
+                        draw(stack, x - (iterator * 8), y + 1, 0, 0, 9, 9);
+                    } else draw(stack, x - (iterator * 8), y - 1, 0, 0, 9, 9);
+                } else draw(stack, x - (iterator * 8), y, 0, 0, 9, 9);
+                iterator = iterator + 1;
+            }
+            if (drawHalf) {
+                if (animate) {
+                    if ((iterator % 2) == 0) {
+                        draw(stack, x - (iterator * 8), y + 2, 20, 0, 9, 9);
+                    } else draw(stack, x - (iterator * 8), y - 2, 20, 0, 9, 9);
+                } else draw(stack, x - (iterator * 8), y, 10, 0, 9, 9);
+                iterator = iterator + 1;
+            }
+            while (iterator != 10) {
+                if (animate) {
+                    if ((iterator % 2) == 0) {
+                        draw(stack, x - (iterator * 8), y + 1, 30, 0, 9, 9);
+                    } else draw(stack, x - (iterator * 8), y - 1, 30, 0, 9, 9);
+                } else draw(stack, x - (iterator * 8), y, 30, 0, 9, 9);
+                iterator = iterator + 1;
+            }
         }
     }
 
@@ -239,7 +273,7 @@ public class ThirstStuffs {
     private static final double JUMPING = 2;
     private static final double ATTACKING = 2;
     private static final double TAKING_DAMAGE = 4;
-    private static final double DEHYDRATED_DEBUFF = 5;
+    private static final double DEHYDRATED_DEBUFF = 0.1;
     private static final double REGEN = 5;
 
     //reduces your thirst when preforming certain actions (see above)

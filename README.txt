@@ -15,6 +15,9 @@ THIS MOD IS INCOMPLETE, IF YOU COMPILE EXPECT TO FIND BUGS
 DD/MM/YYYY
 //CHANGELOGS
 
+23/05/2021
+- added a thirst effect from drinking from water source blocks
+
 20/05/2021
 - added ability to drink from water source blocks
 
